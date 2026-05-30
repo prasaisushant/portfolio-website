@@ -29,7 +29,7 @@
 
     <div class="w-full h-full overflow-hidden relative">
         
-        <div id="desktop-wrapper" class="w-[500vw] h-full flex transition-transform duration-[850ms] ease-out-quint transform translate-x-0">
+        <div id="desktop-wrapper" class="w-[700vw] h-full flex transition-transform duration-[850ms] ease-out-quint transform translate-x-0">
             
             <section class="w-screen h-full shrink-0 flex flex-col items-center justify-center p-4 relative bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-black to-black">
                 <div class="glass-card max-w-md w-full p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center space-y-6 shadow-2xl">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </section>
-
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
             <section id="desktop-about" class="w-screen h-full shrink-0 flex flex-col justify-between relative bg-[#06080a]">
     <div class="flex-grow p-4 md:p-8 flex items-center justify-center">
         <div class="w-full max-w-5xl bg-[#090d13]/90 border border-zinc-800 rounded-xl shadow-2xl p-6 md:p-8 font-mono text-sm">
@@ -181,6 +181,136 @@
                     </div>
                 </footer>
             </section>
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<section id="desktop-projects" class="w-screen h-full shrink-0 flex flex-col justify-between relative bg-[#06080a]">
+    <div class="flex-grow p-4 md:p-8 flex items-center justify-center">
+        <div class="w-full max-w-6xl bg-[#090d13]/90 border border-zinc-800 rounded-xl shadow-2xl p-4 md:p-6 font-mono text-sm h-[82vh] flex flex-col">
+            
+            <div class="flex items-center justify-between pb-3 border-b border-zinc-800/80 mb-4">
+                <div class="flex items-center space-x-2">
+                    <span class="text-zinc-500 text-xs">CLUSTER://PROD-CLUSTER/NAMESPACE/PROJECTS</span>
+                </div>
+                <div class="flex space-x-1.5">
+                    <span class="w-2.5 h-2.5 bg-[#ff5f56] rounded-full"></span>
+                    <span class="w-2.5 h-2.5 bg-[#ffbd2e] rounded-full"></span>
+                    <span class="w-2.5 h-2.5 bg-[#27c93f] rounded-full"></span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-grow overflow-hidden">
+                
+                <div class="lg:col-span-7 flex flex-col overflow-y-auto space-y-3 pr-2 custom-scrollbar">
+                    
+                    <div class="group p-4 bg-[#0d131a] border border-zinc-800/80 hover:border-emerald-500/40 rounded-lg transition-all duration-200 cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
+                        <div class="flex justify-between items-start mb-1.5">
+                            <h4 class="text-white font-bold tracking-wide group-hover:text-emerald-400 transition-colors">svc/twoklips-dating-platform</h4>
+                            <span class="px-2 py-0.5 text-[10px] rounded font-bold bg-emerald-950/80 text-emerald-400 border border-emerald-800/60">STABLE</span>
+                        </div>
+                        <p class="text-zinc-400 text-xs leading-relaxed mb-2.5">
+                            Planned and migrated a projected 500K-user social application topology to AWS arrays.
+                        </p>
+                        <div class="flex flex-wrap gap-1.5 text-[11px]">
+                            <span class="bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-zinc-400 rounded">AWS EKS</span>
+                            <span class="bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-zinc-400 rounded">GitHub Actions</span>
+                            <span class="bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-zinc-400 rounded">Terraform</span>
+                        </div>
+                    </div>
+
+                    <div class="group p-4 bg-[#0d131a] border border-zinc-800/80 hover:border-emerald-500/40 rounded-lg transition-all duration-200 cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
+                        <div class="flex justify-between items-start mb-1.5">
+                            <h4 class="text-white font-bold tracking-wide group-hover:text-emerald-400 transition-colors">svc/k8s-management-engine</h4>
+                            <span class="px-2 py-0.5 text-[10px] rounded font-bold bg-emerald-950/80 text-emerald-400 border border-emerald-800/60">PRODUCTION</span>
+                        </div>
+                        <p class="text-zinc-400 text-xs leading-relaxed mb-2.5">
+                            FastAPI multi-cluster dashboard designed for tracking real-time node scaling alerts and pod workloads metrics.
+                        </p>
+                        <div class="flex flex-wrap gap-1.5 text-[11px]">
+                            <span class="bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-zinc-400 rounded">Python</span>
+                            <span class="bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-zinc-400 rounded">Kubernetes API</span>
+                            <span class="bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-zinc-400 rounded">Prometheus</span>
+                        </div>
+                    </div>
+
+                    <div class="group p-4 bg-[#0d131a] border border-zinc-800/80 hover:border-cyan-500/40 rounded-lg transition-all duration-200 cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-cyan-500"></div>
+                        <div class="flex justify-between items-start mb-1.5">
+                            <h4 class="text-white font-bold tracking-wide group-hover:text-cyan-400 transition-colors">cronjob/ubuntu-cis-hardener</h4>
+                            <span class="px-2 py-0.5 text-[10px] rounded font-bold bg-cyan-950/80 text-cyan-400 border border-cyan-800/60">LIVE @ UBUCON25</span>
+                        </div>
+                        <p class="text-zinc-400 text-xs leading-relaxed mb-2.5">
+                            Automated repeatable operating system hardening profiles presented on stage at UbuCon Asia 2025.
+                        </p>
+                        <div class="flex flex-wrap gap-1.5 text-[11px]">
+                            <span class="bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-zinc-400 rounded">Ansible Playbooks</span>
+                            <span class="bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-zinc-400 rounded">Wazuh SIEM</span>
+                            <span class="bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-zinc-400 rounded">Linux Shell</span>
+                        </div>
+                    </div>
+
+                    <div class="group p-4 bg-[#0d131a] border border-zinc-800/80 hover:border-amber-400/40 rounded-lg transition-all duration-200 cursor-pointer relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-amber-400"></div>
+                        <div class="flex justify-between items-start mb-1.5">
+                            <h4 class="text-white font-bold tracking-wide group-hover:text-amber-400 transition-colors">deploy/sabai-dammi-pipelines</h4>
+                            <span class="px-2 py-0.5 text-[10px] rounded font-bold bg-amber-950/80 text-amber-400 border border-amber-800/60">ROLLING_UPDATE</span>
+                        </div>
+                        <p class="text-zinc-400 text-xs leading-relaxed mb-2.5">
+                            Constructed deployment pipelines and multi-environment orchestration loops for container integrity checks.
+                        </p>
+                        <div class="flex flex-wrap gap-1.5 text-[11px]">
+                            <span class="bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-zinc-400 rounded">Docker Compiles</span>
+                            <span class="bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-zinc-400 rounded">Jenkins DSL</span>
+                            <span class="bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-zinc-400 rounded">Nginx</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="lg:col-span-5 bg-[#040608] border border-zinc-800/80 rounded-lg p-4 flex flex-col justify-between overflow-hidden text-xs text-zinc-400 space-y-4">
+                    <div class="space-y-3 overflow-y-auto custom-scrollbar">
+                        <div class="flex items-center space-x-2 text-zinc-500 border-b border-zinc-900 pb-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            <span class="font-bold tracking-widest text-[10px] uppercase">Telemetry Describe Logs Vector</span>
+                        </div>
+                        
+                        <div>
+                            <span class="text-zinc-600 font-bold"># kubectl describe configuration</span>
+                            <p class="text-zinc-300 mt-1"><span class="text-emerald-400 font-bold">Metadata:</span> sushantprasai-monorepo-core</p>
+                            <p class="text-zinc-300"><span class="text-emerald-400 font-bold">Status:</span> 4 Services Evaluated // 0 Failures</p>
+                        </div>
+
+                        <div class="space-y-1 bg-[#090d13]/50 p-2.5 border border-zinc-900 rounded font-mono text-[11px] leading-relaxed">
+                            <p class="text-emerald-500/80">[INFO] Mapping ingress controllers routing protocols...</p>
+                            <p class="text-emerald-500/80">[INFO] Synchronizing continuous Git webhook hooks...</p>
+                            <p class="text-zinc-500">[WARN] Legacy dependencies sanitized securely via Trivy scans.</p>
+                            <p class="text-emerald-400 font-bold">[SUCCESS] All pipelines validated cleanly. Ready for deployment.</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 border-t border-zinc-900">
+                        <a href="https://github.com/sushant-prasai" target="_blank" class="w-full flex items-center justify-center space-x-2 py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-md font-bold transition-all text-center">
+                            <span>cat git-repository-endpoints.sh</span>
+                            <span class="text-xs">→</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-4 pt-2 border-t border-zinc-800/40 flex items-center justify-between text-xs text-zinc-500">
+                <span class="animate-pulse text-emerald-500/80">↓ Scroll down to execute main system terminal console</span>
+                <span class="text-zinc-600 font-bold">[Node Index: 04]</span>
+            </div>
+            
+        </div>
+    </div>
+
+    <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10">
+        <div><span class="text-emerald-400 font-bold">Workspace: 04 // Cluster Deployments Registry</span></div>
+        <div class="text-zinc-500 text-[11px]">System Status: <span class="text-emerald-400 font-bold">Operational</span></div>
+    </footer>
+</section>
         </div>
     </div>
 

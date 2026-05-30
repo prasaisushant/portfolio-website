@@ -5,8 +5,8 @@ const pageOffsets = {
     'login': 0,
     'about': 1,
     'terminal': 2,
-    'skills': 3,          
-    'projects': 4,        
+    'projects': 3, 
+    'skills': 4,          
     'certifications': 5,
     'contacts': 6
 };
@@ -274,4 +274,68 @@ function handleTerminalCommand(rawInputValue) {
 
 document.addEventListener("DOMContentLoaded", () => {
     initializeTerminalShell();
+});
+
+/**
+ * Global Workspace Scroll and Navigation Track Synchronization Engine
+ */
+let currentWorkspaceIndex = 0;
+const totalWorkspacesCount = 7; // Synced with w-[700vw] matrix
+let isScrollThrottled = false;
+
+function setupWorkspaceScrollEngine() {
+    const wrapper = document.getElementById('desktop-wrapper');
+    const terminalBody = document.getElementById('terminal-body');
+
+    if (!wrapper) return;
+
+    window.addEventListener('wheel', (e) => {
+        // 1. INTENT SANITIZATION: If mouse is inside active terminal console body, 
+        // let the container scroll internally instead of shifting the global layout.
+        if (terminalBody && terminalBody.contains(e.target)) {
+            // Only capture layout scroll if user is at boundary metrics edges
+            const isScrollingUp = e.deltaY < 0;
+            const isScrollingDown = e.deltaY > 0;
+            
+            const isAtTop = terminalBody.scrollTop === 0;
+            const isAtBottom = Math.ceil(terminalBody.scrollTop + terminalBody.clientHeight) >= terminalBody.scrollHeight;
+
+            if (isScrollingUp && !isAtTop) return;   // Let terminal scroll up internally
+            if (isScrollingDown && !isAtBottom) return; // Let terminal scroll down internally
+        }
+
+        // 2. THROTTLE LOOP: Prevent rapid mouse wheel flicks from throwing out viewport index
+        if (isScrollThrottled) return;
+
+        if (e.deltaY > 0) {
+            // Scroll Down / Wheel Forward -> Navigate Next Page
+            if (currentWorkspaceIndex < totalWorkspacesCount - 1) {
+                currentWorkspaceIndex++;
+                executeLayoutTransition();
+            }
+        } else if (e.deltaY < 0) {
+            // Scroll Up / Wheel Backward -> Navigate Previous Page
+            if (currentWorkspaceIndex > 0) {
+                currentWorkspaceIndex--;
+                executeLayoutTransition();
+            }
+        }
+    }, { passive: false });
+
+    function executeLayoutTransition() {
+        isScrollThrottled = true;
+        
+        // Translate the horizontal canvas wrapper relative to current global index
+        wrapper.style.transform = `translateX(-${currentWorkspaceIndex * 100}vw)`;
+        
+        // Clear lock once transition completes smoothly (Matching 850ms duration-[850ms])
+        setTimeout(() => {
+            isScrollThrottled = false;
+        }, 850);
+    }
+}
+
+// Ensure execution loops wait properly for full DOM hydration maps
+document.addEventListener('DOMContentLoaded', () => {
+    setupWorkspaceScrollEngine();
 });
