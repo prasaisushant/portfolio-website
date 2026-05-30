@@ -15,12 +15,12 @@ const pageOffsets = {
 const commandRegistry = {
     help: function() {
         return `Available Operations Map:\n` +
-               `  <span class="text-emerald-400 font-bold">about</span>           - View summary system architectural specifications (Neofetch)\n` +
-               `  <span class="text-emerald-400 font-bold">skills</span>          - Load compiled competency profiles and core frameworks\n` +
-               `  <span class="text-emerald-400 font-bold">projects</span>        - Enumerate production systems and deployment skeletons\n` +
-               `  <span class="text-emerald-400 font-bold">certifications</span>  - List cloud infrastructure and vendor verifications\n` +
-               `  <span class="text-emerald-400 font-bold">contacts</span>        - Output upstream communication keys and endpoints\n` +
-               `  <span class="text-emerald-400 font-bold">go [page]</span>       - Navigate layout direct via view execution matrix (e.g., 'go about')\n` +
+               `  <span class="text-emerald-400 font-bold">go <span class="text-purple-400 font-bold">[page]</span></span>       - Navigate layout direct via view execution matrix (e.g., 'go about')\n` +
+               `  <span class="text-emerald-400 font-bold">about</span>           - View summary system architectural specifications (Neofetch) | <span class="text-purple-400 font-bold">[page]</span>\n` +
+               `  <span class="text-emerald-400 font-bold">skills</span>          - Load compiled competency profiles and core frameworks | <span class="text-purple-400 font-bold">[page]</span>\n` +
+               `  <span class="text-emerald-400 font-bold">projects</span>        - Enumerate production systems and deployment skeletons | <span class="text-purple-400 font-bold">[page]</span>\n` +
+               `  <span class="text-emerald-400 font-bold">certifications</span>  - List cloud infrastructure and vendor verifications | <span class="text-purple-400 font-bold">[page]</span>\n` +
+               `  <span class="text-emerald-400 font-bold">contacts</span>        - Output upstream communication keys and endpoints | <span class="text-purple-400 font-bold">[page]</span>\n` +
                `  <span class="text-emerald-400 font-bold">echo [string]</span>   - Reflect text parameters directly back to stdout pipelines\n` +
                `  <span class="text-emerald-400 font-bold">pwd</span>             - Print current active session node working directory\n` +
                `  <span class="text-emerald-400 font-bold">whoami</span>          - Return session parameter evaluation authority token\n` +
