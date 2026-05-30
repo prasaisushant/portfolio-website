@@ -1,5 +1,5 @@
 /**
- * Master Environment Main Orchestrator Layer
+ * Master Environment Navigation Orchestrator Layer
  */
 const systemBootLogs = [
     "Initializing secure kernel-level architecture protocols...",
@@ -14,7 +14,11 @@ const systemBootLogs = [
 
 let bootStep = 0;
 let bootTimeout;
-let isDesktopActive = false;
+
+// NAVIGATION CONTROL VECTOR STATE MATRIX
+let activeWorkspaceIndex = 0; // 0: Login, 1: About Me, 2: Terminal Shell
+let scrollThrottleGuard = false;
+const animationHoldDuration = 900; 
 
 function processBootLogging() {
     const logCanvas = document.getElementById("boot-log");
@@ -28,7 +32,7 @@ function processBootLogging() {
         logCanvas.appendChild(logLine);
         logScreen.scrollTop = logScreen.scrollHeight;
         bootStep++;
-        bootTimeout = setTimeout(processBootLogging, Math.random() * 80 + 40);
+        bootTimeout = setTimeout(processBootLogging, Math.random() * 80 + 30);
     } else {
         terminateBootAndShowLogin();
     }
@@ -41,62 +45,114 @@ function terminateBootAndShowLogin() {
     
     bootScreen.style.opacity = '0';
     bootScreen.style.transition = 'opacity 400ms ease-out';
-    setTimeout(() => {
-        bootScreen.remove();
-    }, 400);
+    setTimeout(() => bootScreen.remove(), 400);
+}
+
+// CAROUSEL VIEW MATRIX DISPLACEMENT MAP ENGINE
+function updateWorkspaceViewportPosition() {
+    const wrapper = document.getElementById("desktop-wrapper");
+    const termInput = document.getElementById("terminal-input");
+    if (!wrapper) return;
+
+    // Calculate structural percent offsets horizontally across display bounds
+    const displacementValue = activeWorkspaceIndex * -100;
+    wrapper.style.transform = `translateX(${displacementValue}vw)`;
+
+    // Handle interactive element state changes based on visibility fields
+    if (activeWorkspaceIndex === 2) {
+        setTimeout(() => {
+            if (termInput) {
+                termInput.removeAttribute("disabled");
+                termInput.focus();
+            }
+        }, animationHoldDuration);
+    } else {
+        if (termInput) termInput.setAttribute("disabled", "true");
+    }
+}
+
+// PROGRAMMATIC DEBOUNCED MOUSE WHEEL ROTATION PARSER INTERCEPTOR
+function handleSystemViewportScroll(e) {
+    // Block scroll action routines if active on Login workspace screen index
+    if (activeWorkspaceIndex === 0) return;
+    if (scrollThrottleGuard) return;
+
+    const directionalDelta = e.deltaY;
+    let baselineStateChanged = false;
+
+    if (directionalDelta > 30) {
+        // User scrolled down -> Step forward horizontally to next index
+        if (activeWorkspaceIndex < 2) { // Caps movement path threshold dynamically at index 2 for now
+            activeWorkspaceIndex++;
+            baselineStateChanged = true;
+        } else if (activeWorkspaceIndex === 2) {
+            // Skeleton trigger log warning for upcoming projects section placeholder
+            console.log("Next workspace: Project Matrix Space Pipeline target slot.");
+        }
+    } else if (directionalDelta < -30) {
+        // User scrolled up -> Step backward horizontally to previous index
+        if (activeWorkspaceIndex > 1) { 
+            activeWorkspaceIndex--;
+            baselineStateChanged = true;
+        }
+    }
+
+    if (baselineStateChanged) {
+        scrollThrottleGuard = true;
+        updateWorkspaceViewportPosition();
+        setTimeout(() => {
+            scrollThrottleGuard = false;
+        }, animationHoldDuration);
+    }
 }
 
 // Global Environment Interaction Bindings Initializer Matrix
 window.addEventListener("DOMContentLoaded", () => {
-    // 1. Kick off custom hardware simulation boot sequence trace logging
     processBootLogging();
 
-    // 2. Monitor Escape hotkey down events to skip initialization
     window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-            terminateBootAndShowLogin();
-        }
+        if (e.key === "Escape") terminateBootAndShowLogin();
     });
 
-    // 3. Bind interactive liquid-glass click action elements to swap horizontally
+    // Capture vertical wheel loops to map horizontal desktop animations
+    window.addEventListener("wheel", handleSystemViewportScroll, { passive: true });
+
+    // Handle Login Button execution flow
     const btnLogin = document.getElementById("btn-login");
-    const desktopWrapper = document.getElementById("desktop-wrapper");
-    const termInput = document.getElementById("terminal-input");
-    
-    if (btnLogin && desktopWrapper) {
+    if (btnLogin) {
         btnLogin.addEventListener("click", () => {
-            // Shift perspective view directly to Workspace 1 (Horizontal Swap)
-            desktopWrapper.style.transform = "translateX(-100vw)";
-            
-            // Activate and focus terminal input field line ONLY AFTER animation completes
-            setTimeout(() => {
-                isDesktopActive = true;
-                if (termInput) {
-                    termInput.removeAttribute("disabled");
-                    termInput.focus();
-                }
-            }, 850);
+            activeWorkspaceIndex = 1; // Advance directly into Neofetch About Me Desktop Screen
+            updateWorkspaceViewportPosition();
         });
     }
 
-    // 4. Force Focus behavior into input field anytime window background area is clicked (only if desktop is active)
+    // Handle structural redirection action rule targeting Close terminal button layout elements
+    const btnCloseTerminal = document.getElementById("btn-terminal-close");
+    if (btnCloseTerminal) {
+        btnCloseTerminal.addEventListener("click", () => {
+            activeWorkspaceIndex = 0; // Drop directly backwards onto initial gatekeeper login grid card layout
+            updateWorkspaceViewportPosition();
+        });
+    }
+
+    // Force Terminal window input layout focus behaviors on clean background element clicks
     const termBody = document.getElementById("terminal-body");
     if (termBody) {
         termBody.addEventListener("click", () => {
-            if (!isDesktopActive) return;
-            if (termInput) termInput.focus();
+            if (activeWorkspaceIndex !== 2) return;
+            const input = document.getElementById("terminal-input");
+            if (input) input.focus();
         });
     }
 
-    // 5. Active Live Time Tracker Engine mapping logic
+    // Simple common system background loop monitoring system clock instances
     setInterval(() => {
-        const clockNode = document.getElementById("live-clock");
-        if (clockNode) {
-            const now = new Date();
-            clockNode.textContent = now.toUTCString().replace("GMT", "UTC");
-        }
+        const timeString = new Date().toUTCString().replace("GMT", "UTC");
+        const mainClock = document.getElementById("live-clock");
+        const aboutClock = document.getElementById("about-clock");
+        if (mainClock) mainClock.textContent = timeString;
+        if (aboutClock) aboutClock.textContent = timeString;
     }, 1000);
 
-    // Initialize individual application modules without forcing early focus
     initializeTerminalShell();
 });

@@ -3,9 +3,9 @@
  */
 const commandResponses = {
     help: "Available expressions:<br> <span class='text-emerald-400'>'about'</span> - Architectural scope context overview<br> <span class='text-emerald-400'>'projects'</span> - Product codebase deployment parameters<br> <span class='text-emerald-400'>'skills'</span> - Visual infrastructure asset profiles<br> <span class='text-emerald-400'>'whoami'</span> - Print structural connection metadata<br> <span class='text-emerald-400'>'pwd'</span> - Print explicit system active coordinates<br> <span class='text-emerald-400'>'clear'</span> - Clear visual execution logs canvas buffer",
-    about: "Sushant Prasai: Cloud Infrastructure Engineer specialized in resilient DevOps configuration vectors, automatic processing routines, and responsive web platform interfaces.",
-    projects: "📁 production-cluster-mesh [Active/DevOps] <br>📁 matrix-compressor-api [Active/Node.js] <br>📁 minimal-kernel-shell [Archived/VanillaJS]",
-    skills: "Cloud Architectures: AWS, GCP, Kubernetes Core Deployments<br>CI/CD Automation: GitHub Actions, Terraform Infrastructure Provisioning<br>Web Interfaces: Native ECMAScript (ES6+), Semantic layouts & Tailwind Frameworks",
+    about: "Sushant Prasai: Systems & DevOps Engineer focused on resilient platform telemetry monitoring architectures and high-density virtualization setups.",
+    projects: "📁 production-cluster-mesh [Active/DevOps] <br>📁 matrix-compressor-api [Active/Node.js]",
+    skills: "Cloud Architectures: AWS, GCP, Kubernetes Core Deployments<br>Infrastructure Setup: Ansible, Terraform, Ceph Storage Clusters, VMware ESXi",
     whoami: "guest@sushant.dev // Secure external session connection authorized.",
     pwd: "portfolio:~/home/workspace"
 };
@@ -23,7 +23,6 @@ function initializeTerminalShell() {
         const rawValue = input.value;
         const currentBuffer = rawValue.trim().toLowerCase();
 
-        // 1. TAB AUTOCOMPLETE ENGINE
         if (e.key === "Tab") {
             e.preventDefault(); 
             if (!currentBuffer) return;
@@ -42,7 +41,6 @@ function initializeTerminalShell() {
             }
         }
 
-        // 2. ENTER PROCESS EXECUTION LAYER
         if (e.key === "Enter") {
             if (!currentBuffer) return;
             appendEchoRow(rawValue);
