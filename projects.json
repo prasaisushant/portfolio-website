@@ -1,11 +1,11 @@
 [
   {
     "id": "2kips-dating-platform",
-    "slug": "svc/twoklips-dating-platform",
+    "slug": "deploy/2klips-dating-platform",
     "title": "2Klips Dating App Infrastructure",
     "status": "STABLE",
-    "statusColor": "emerald",
-    "accentColor": "emerald",
+    "statusColor": "amber",
+    "accentColor": "amber",
     "summary": "Planned and migrated a projected 500K-user social application topology to AWS arrays.",
     "description": "Architected and executed a full cloud migration for a social dating platform targeting 500K+ concurrent users. Designed a multi-AZ VPC topology with public/private subnet segmentation, NAT gateways, and ALB-based ingress routing. Provisioned EKS clusters with auto-scaling node groups via Terraform, and implemented zero-downtime blue/green deployments through GitHub Actions CI/CD pipelines. Set up RDS Aurora with automated failover, S3-backed media storage with CloudFront CDN distribution, and IAM roles with least-privilege access policies across all service accounts.",
     "tools": ["AWS EKS", "GitHub Actions", "Terraform", "ArgoCD", "CloudFront", "IAM", "VPC"],
@@ -20,7 +20,7 @@
     ],
     "github": null,
     "live": "https://2klips.com/",
-    "image": null
+    "image": "assets/images/2klips.png"
   },
   {
     "id": "k8s-management-engine",
@@ -43,7 +43,7 @@
     ],
     "github": "https://github.com/prasaisushant/fyp_backend",
     "github_frontend": "https://github.com/prasaisushant/fyp_frontend",
-    "image": null
+    "image": "assets/images/k8.png"
   },
   {
     "id": "ubuntu-cis-hardener",
@@ -55,7 +55,7 @@
     "summary": "Automated repeatable OS hardening profiles presented on stage at UbuCon Asia 2025.",
     "description": "Developed a fully automated CIS hardening framework for Ubuntu 22.04/24.04 servers using Ansible playbooks. The solution covers kernel parameter tuning, service disabling, filesystem mount hardening, PAM configuration, auditd rules, and SSH lockdown. Wazuh SIEM agents are deployed alongside for continuous compliance monitoring and drift detection. The framework was battle-tested on bare-metal and VM environments before being presented live on stage at UbuCon Asia 2025 in Kathmandu.",
     "tools": ["Ansible", "Wazuh SIEM", "Bash", "Ubuntu", "auditd", "PAM", "OpenSCAP"],
-    "role": "Security Automation Engineer",
+    "role": "Network and System Engineer",
     "year": "2025",
     "duration": "2 months",
     "highlights": [
@@ -66,8 +66,8 @@
       "Integrated Wazuh for post-hardening continuous compliance scoring"
     ],
     "github": null,
-    "live": null,
-    "image": null
+    "live": "https://docs.google.com/presentation/d/1ohsTcSMudJvSiqwLQcOf27m-RQJDF1yn/edit?slide=id.p1#slide=id.p1",
+    "image": "assets/images/cis.png"
   },
   {
     "id": "sabai-dammi-pipelines",
@@ -88,8 +88,69 @@
       "Reduced average deployment cycle from 45 minutes to under 10 minutes",
       "Multi-environment promotion flow with manual approval gates before production"
     ],
-    "github": "https://github.com/sushant-prasai",
+    "github": null,
+    "live": "https://dammii.com/",
+    "image": "assets/images/dammii.png"
+  },
+  {
+    "id": "tshoot",
+    "slug": "bin/tshoot",
+    "title": "tshoot — Linux Infrastructure TUI",
+    "status": "v1.0.0",
+    "statusColor": "emerald",
+    "accentColor": "emerald",
+    "summary": "Zero-dependency Go TUI for instant Linux server diagnostics — CPU, memory, disk, ports, containers and network in one dashboard.",
+    "description": "tshoot is a lightweight terminal user interface built natively in Go for accelerating the initial discovery phase of infrastructure incident response. Instead of manually chaining top, df -h, ss -tulpn, ping, and docker logs one by one, tshoot integrates all essential first-step diagnostic vectors into a single real-time dashboard. It communicates directly with the Linux kernel's /proc filesystem rather than scraping shell utility output, keeping its footprint minimal even on resource-exhausted servers. Distributed as a single statically linked binary with zero runtime dependencies.",
+    "tools": [
+      "Go",
+      "Linux /proc",
+      "Docker API",
+      "GitHub Actions",
+      "Shell"
+    ],
+    "role": "Author & Maintainer",
+    "year": "2026",
+    "duration": "Ongoing",
+    "highlights": [
+      "Reads CPU, memory, and disk metrics directly from /proc — no shell utility dependencies",
+      "Monitors Docker container statuses and streams logs via the Docker daemon API",
+      "Real-time port mapping cross-referencing open sockets to owning PIDs",
+      "Configurable ping engine for tracking latency to custom infrastructure endpoints",
+      "Single statically linked binary — runs on any Linux host with zero install requirements",
+      "F4 maximize mode for full-screen panel inspection during active incidents"
+    ],
+    "github": "https://github.com/prasaisushant/tshoot",
     "live": null,
-    "image": null
+    "image": "assets/images/tshoot.png"
+  },
+  {
+    "id": "squeeze",
+    "slug": "svc/squeeze",
+    "title": "Squeeze — Client-Side Image Compressor",
+    "status": "LIVE",
+    "statusColor": "cyan",
+    "accentColor": "cyan",
+    "summary": "Privacy-first browser-based image compressor and format converter — files never leave the device.",
+    "description": "Squeeze is a minimalist, privacy-first web application that compresses and converts images entirely within the browser using the HTML5 Canvas API. Built to solve a real problem: submitting sensitive documents (IDs, passports, certificates) to government or institutional portals with strict file size limits, without the privacy risk of uploading them to unknown third-party servers. Zero external framework dependencies — just vanilla HTML, CSS, and JavaScript. Can be used fully offline after the first load.",
+    "tools": [
+      "HTML5",
+      "CSS3",
+      "Vanilla JavaScript",
+      "Canvas API",
+      "Blob API"
+    ],
+    "role": "Author",
+    "year": "2025",
+    "duration": "Ongoing",
+    "highlights": [
+      "100% client-side processing — sensitive files never transmitted to any server",
+      "Supports JPEG, PNG, and WebP conversion entirely within the browser sandbox",
+      "Bulk queue management with per-file settings and side-by-side size previews",
+      "Works fully offline after initial page load via browser cache",
+      "Zero heavy framework dependencies — entire app is auditable vanilla JS"
+    ],
+    "github": "https://github.com/prasaisushant/squeeze",
+    "live": "https://squeeze.sushantprasai.com.np",
+    "image": "assets/images/squeeze.png"
   }
 ]

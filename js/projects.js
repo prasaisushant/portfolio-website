@@ -171,7 +171,7 @@ function selectProject(id) {
         <div class="space-y-0.5 mb-3 text-[11px]">
             <p class="text-zinc-300"><span class="${c.highlight} font-bold">Name:</span> ${p.title}</p>
             <p class="text-zinc-300"><span class="${c.highlight} font-bold">Role:</span> ${p.role}</p>
-            <p class="text-zinc-300"><span class="${c.highlight} font-bold">Year:</span> ${p.year} &nbsp;|&nbsp; <span class="${c.highlight} font-bold">Duration:</span> ${p.duration}</p>
+            <p class="text-zinc-300"><span class="${c.highlight} font-bold">Year:</span> ${p.year} 
             <p class="text-zinc-300"><span class="${c.highlight} font-bold">Status:</span> <span class="${c.statusText} font-bold">${p.status}</span></p>
         </div>
 
