@@ -722,5 +722,30 @@
     <script src="js/certifications.js"></script>
     <script src="js/experience.js"></script>
     <script src="js/main.js"></script>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+     MOBILE NAV — fixed floating prev/next pill (hidden on desktop)
+════════════════════════════════════════════════════════════════ -->
+<div id="mobile-nav" class="md:hidden fixed bottom-20 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 pointer-events-none opacity-0 transition-opacity duration-300">
+    <button id="mobile-prev"
+        class="pointer-events-auto flex items-center gap-1.5 px-4 py-2.5 rounded-full border border-zinc-700 bg-[#0d131a]/95 backdrop-blur-sm text-zinc-400 font-mono text-[11px] font-bold active:scale-95 transition-all duration-150 shadow-lg">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+        </svg>
+        PREV
+    </button>
+
+    <span id="mobile-nav-label" class="px-3 py-2 rounded-full border border-zinc-800 bg-[#090d13]/95 backdrop-blur-sm text-emerald-400 font-mono text-[10px] font-bold tracking-widest shadow-lg">
+        01/07
+    </span>
+
+    <button id="mobile-next"
+        class="pointer-events-auto flex items-center gap-1.5 px-4 py-2.5 rounded-full border border-zinc-700 bg-[#0d131a]/95 backdrop-blur-sm text-zinc-400 font-mono text-[11px] font-bold active:scale-95 transition-all duration-150 shadow-lg">
+        NEXT
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+        </svg>
+    </button>
+</div>
 </body>
 </html>

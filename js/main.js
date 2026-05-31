@@ -26,6 +26,9 @@ const TOTAL_WORKSPACES    = 8;   // Must match w-[800vw] and pageOffsets in term
 let activeWorkspaceIndex = 0;    // 0=Login 1=About 2=Terminal 3=Projects 4=Skills 5=Experience 6=Certifications 7=Contacts
 let scrollThrottled      = false;
 
+// ─── Workspace Labels ─────────────────────────────────────────────────────────
+const WORKSPACE_LABELS = ['LOGIN','ABOUT','TERM','PROJ','SKILLS','EXP','CERTS','CONTACT'];
+
 // ─── Boot Sequence ────────────────────────────────────────────────────────────
 function processBootLogging() {
     const logCanvas = document.getElementById("boot-log");
@@ -54,11 +57,6 @@ function terminateBootAndShowLogin() {
 }
 
 // ─── Core Navigation ─────────────────────────────────────────────────────────
-/**
- * Move the viewport to the given workspace index.
- * Exposed globally so terminal.js `go` command can call it without
- * maintaining its own copy of activeWorkspaceIndex.
- */
 function navigateTo(index) {
     if (index < 0 || index >= TOTAL_WORKSPACES) return;
 
@@ -66,8 +64,12 @@ function navigateTo(index) {
     const wrapper = document.getElementById("desktop-wrapper");
     if (!wrapper) return;
 
-    // wrapper.style.transform = `translateX(${activeWorkspaceIndex * -100}vw)`;
     wrapper.style.transform = `translateX(${activeWorkspaceIndex * -100}vw)`;
+
+    // Sync all nav UI
+    syncFooterNav(activeWorkspaceIndex);
+    syncMobileNav(activeWorkspaceIndex);
+
     // Enable / disable terminal input depending on visibility
     const termInput = document.getElementById("terminal-input");
     if (activeWorkspaceIndex === 2) {
@@ -92,14 +94,13 @@ function syncFooterNav(index) {
         const isActive = pipIndex === index;
         const isLogin  = pipIndex === 0;
 
-        pip.classList.toggle('text-emerald-400',  isActive);
-        pip.classList.toggle('border-emerald-500', isActive);
-        pip.classList.toggle('bg-emerald-950/60',  isActive);
-        pip.classList.toggle('text-zinc-600',      !isActive);
-        pip.classList.toggle('border-zinc-800',    !isActive);
-        pip.classList.toggle('bg-transparent',     !isActive);
+        pip.classList.toggle('text-emerald-400',   isActive);
+        pip.classList.toggle('border-emerald-500',  isActive);
+        pip.classList.toggle('bg-emerald-950/60',   isActive);
+        pip.classList.toggle('text-zinc-600',       !isActive);
+        pip.classList.toggle('border-zinc-800',     !isActive);
+        pip.classList.toggle('bg-transparent',      !isActive);
 
-        // Login pip is never clickable once session has started
         if (isLogin) {
             pip.classList.add('opacity-30', 'cursor-not-allowed');
             pip.onclick = null;
@@ -109,27 +110,44 @@ function syncFooterNav(index) {
     });
 }
 
+// ─── Mobile Nav Pill Sync ─────────────────────────────────────────────────────
+function syncMobileNav(index) {
+    const nav   = document.getElementById('mobile-nav');
+    const label = document.getElementById('mobile-nav-label');
+    const prev  = document.getElementById('mobile-prev');
+    const next  = document.getElementById('mobile-next');
+    if (!nav) return;
+
+    if (index === 0) {
+        nav.style.opacity      = '0';
+        nav.style.pointerEvents = 'none';
+        return;
+    }
+
+    nav.style.opacity      = '1';
+    nav.style.pointerEvents = 'auto';
+
+    if (label) label.textContent = WORKSPACE_LABELS[index] + ' ' + index + '/' + (TOTAL_WORKSPACES - 1);
+
+    // Dim at boundaries
+    if (prev) prev.style.opacity = index <= 1 ? '0.3' : '1';
+    if (next) next.style.opacity = index >= TOTAL_WORKSPACES - 1 ? '0.3' : '1';
+}
+
 // ─── Scroll Handler ───────────────────────────────────────────────────────────
 function handleViewportScroll(e) {
-    // Lock out scroll navigation while on Login screen
     if (activeWorkspaceIndex === 0) return;
     if (scrollThrottled) return;
 
-    // If the mouse is inside the terminal body, let it scroll internally
-    // unless it has already hit its boundary (handled in terminal.js scroll setup)
     const terminalBody = document.getElementById("terminal-body");
     if (terminalBody && terminalBody.contains(e.target)) {
-        const isScrollingUp   = e.deltaY < 0;
-        const isScrollingDown = e.deltaY > 0;
         const atTop    = terminalBody.scrollTop === 0;
         const atBottom = Math.ceil(terminalBody.scrollTop + terminalBody.clientHeight) >= terminalBody.scrollHeight;
-
-        if (isScrollingUp   && !atTop)    return;
-        if (isScrollingDown && !atBottom) return;
+        if (e.deltaY < 0 && !atTop)    return;
+        if (e.deltaY > 0 && !atBottom) return;
     }
 
     let changed = false;
-
     if (e.deltaY > 30 && activeWorkspaceIndex < TOTAL_WORKSPACES - 1) {
         activeWorkspaceIndex++;
         changed = true;
@@ -147,45 +165,35 @@ function handleViewportScroll(e) {
 
 // ─── Keyboard Navigation Handler ─────────────────────────────────────────────
 function handleKeyNavigation(e) {
-    // Always allow Escape to skip boot
     if (e.key === "Escape") {
         terminateBootAndShowLogin();
         return;
     }
 
-    // Arrow / Page keys only — ignore everything else
     const NAV_KEYS = ["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight", "PageDown", "PageUp"];
     if (!NAV_KEYS.includes(e.key)) return;
-
-    // Lock out on Login screen (index 0) — by design, can't keyboard-nav away from login
     if (activeWorkspaceIndex === 0) return;
 
-    // If the terminal input is focused, let arrow keys serve the input (history nav)
-    // Only suppress workspace nav when terminal workspace is active
     if (activeWorkspaceIndex === 2) {
         const termInput = document.getElementById("terminal-input");
         if (termInput && document.activeElement === termInput) return;
     }
 
-    // Respect throttle — same rule as wheel scroll
     if (scrollThrottled) return;
 
     const goForward = ["ArrowDown", "ArrowRight", "PageDown"].includes(e.key);
     const goBack    = ["ArrowUp",   "ArrowLeft",  "PageUp"  ].includes(e.key);
 
     let changed = false;
-
     if (goForward && activeWorkspaceIndex < TOTAL_WORKSPACES - 1) {
         activeWorkspaceIndex++;
         changed = true;
     } else if (goBack && activeWorkspaceIndex > 1) {
-        // Floor at 1 (About) — Login (0) is only reachable via "close session"
         activeWorkspaceIndex--;
         changed = true;
     }
 
     if (changed) {
-        // Prevent the key from scrolling any inner scrollable containers
         e.preventDefault();
         scrollThrottled = true;
         navigateTo(activeWorkspaceIndex);
@@ -193,58 +201,57 @@ function handleKeyNavigation(e) {
     }
 }
 
+// ─── Touch Swipe Handler ──────────────────────────────────────────────────────
+let touchStartY = 0;
+let touchStartX = 0;
+
+function initTouchHandlers() {
+    window.addEventListener("touchstart", (e) => {
+        touchStartY = e.touches[0].clientY;
+        touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    window.addEventListener("touchend", (e) => {
+        if (activeWorkspaceIndex === 0) return;
+        if (scrollThrottled) return;
+
+        const deltaY = touchStartY - e.changedTouches[0].clientY;
+        const deltaX = touchStartX - e.changedTouches[0].clientX;
+
+        if (Math.abs(deltaY) < 50 || Math.abs(deltaY) < Math.abs(deltaX)) return;
+
+        const terminalBody = document.getElementById("terminal-body");
+        if (terminalBody && terminalBody.contains(e.target)) {
+            const atTop    = terminalBody.scrollTop === 0;
+            const atBottom = Math.ceil(terminalBody.scrollTop + terminalBody.clientHeight) >= terminalBody.scrollHeight;
+            if (deltaY < 0 && !atTop)    return;
+            if (deltaY > 0 && !atBottom) return;
+        }
+
+        let changed = false;
+        if (deltaY > 0 && activeWorkspaceIndex < TOTAL_WORKSPACES - 1) {
+            activeWorkspaceIndex++;
+            changed = true;
+        } else if (deltaY < 0 && activeWorkspaceIndex > 1) {
+            activeWorkspaceIndex--;
+            changed = true;
+        }
+
+        if (changed) {
+            scrollThrottled = true;
+            navigateTo(activeWorkspaceIndex);
+            setTimeout(() => { scrollThrottled = false; }, TRANSITION_DURATION);
+        }
+    }, { passive: true });
+}
+
 // ─── DOMContentLoaded ─────────────────────────────────────────────────────────
 window.addEventListener("DOMContentLoaded", () => {
     processBootLogging();
 
     window.addEventListener("keydown", handleKeyNavigation);
-
-    // Single wheel listener — terminal.js scroll engine removed
     window.addEventListener("wheel", handleViewportScroll, { passive: true });
-    // ─── Touch Swipe Handler ──────────────────────────────────────────────────────
-        let touchStartY = 0;
-        let touchStartX = 0;
-
-        window.addEventListener("touchstart", (e) => {
-            touchStartY = e.touches[0].clientY;
-            touchStartX = e.touches[0].clientX;
-        }, { passive: true });
-
-        window.addEventListener("touchend", (e) => {
-            if (activeWorkspaceIndex === 0) return;
-            if (scrollThrottled) return;
-
-            const deltaY = touchStartY - e.changedTouches[0].clientY;
-            const deltaX = touchStartX - e.changedTouches[0].clientX;
-
-            // Only trigger if vertical swipe is dominant and long enough
-            if (Math.abs(deltaY) < 50 || Math.abs(deltaY) < Math.abs(deltaX)) return;
-
-            // If inside terminal body and not at boundary, let it scroll
-            const terminalBody = document.getElementById("terminal-body");
-            if (terminalBody && terminalBody.contains(e.target)) {
-                const atTop    = terminalBody.scrollTop === 0;
-                const atBottom = Math.ceil(terminalBody.scrollTop + terminalBody.clientHeight) >= terminalBody.scrollHeight;
-                if (deltaY < 0 && !atTop)    return;
-                if (deltaY > 0 && !atBottom) return;
-            }
-
-            let changed = false;
-
-            if (deltaY > 0 && activeWorkspaceIndex < TOTAL_WORKSPACES - 1) {
-                activeWorkspaceIndex++;
-                changed = true;
-            } else if (deltaY < 0 && activeWorkspaceIndex > 1) {
-                activeWorkspaceIndex--;
-                changed = true;
-            }
-
-            if (changed) {
-                scrollThrottled = true;
-                navigateTo(activeWorkspaceIndex);
-                setTimeout(() => { scrollThrottled = false; }, TRANSITION_DURATION);
-            }
-        }, { passive: true });
+    initTouchHandlers();
 
     // Login button
     const btnLogin = document.getElementById("btn-login");
@@ -268,6 +275,30 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Mobile prev/next buttons
+    const mobilePrev = document.getElementById('mobile-prev');
+    const mobileNext = document.getElementById('mobile-next');
+    if (mobilePrev) {
+        mobilePrev.addEventListener('click', () => {
+            if (activeWorkspaceIndex > 1 && !scrollThrottled) {
+                scrollThrottled = true;
+                activeWorkspaceIndex--;
+                navigateTo(activeWorkspaceIndex);
+                setTimeout(() => { scrollThrottled = false; }, TRANSITION_DURATION);
+            }
+        });
+    }
+    if (mobileNext) {
+        mobileNext.addEventListener('click', () => {
+            if (activeWorkspaceIndex < TOTAL_WORKSPACES - 1 && !scrollThrottled) {
+                scrollThrottled = true;
+                activeWorkspaceIndex++;
+                navigateTo(activeWorkspaceIndex);
+                setTimeout(() => { scrollThrottled = false; }, TRANSITION_DURATION);
+            }
+        });
+    }
+
     // Live clock — updates both footer clocks
     setInterval(() => {
         const timeString = new Date().toUTCString().replace("GMT", "UTC");
@@ -277,11 +308,14 @@ window.addEventListener("DOMContentLoaded", () => {
         if (aboutClock) aboutClock.textContent = timeString;
     }, 1000);
 
-    // Terminal shell init — called ONCE here only (terminal.js does NOT call it again)
+    // Page init
     initializeTerminalShell();
-    initProjectsPage(); 
+    initProjectsPage();
     initSkillsPage();
     initCertificationsPage();
     initExperiencePage();
+
+    // Initial nav sync
     syncFooterNav(activeWorkspaceIndex);
+    syncMobileNav(activeWorkspaceIndex);
 });
