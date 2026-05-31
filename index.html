@@ -32,7 +32,7 @@
     <div class="w-full h-full overflow-hidden relative">
 
         <!-- Horizontal workspace strip — all sections live inside here -->
-        <div id="desktop-wrapper" class="w-[700vw] h-full flex transition-transform duration-[850ms] ease-out-quint transform translate-x-0">
+        <div id="desktop-wrapper" class="w-[800vw] h-full flex transition-transform duration-[850ms] ease-out-quint transform translate-x-0">
 
             <!-- ═══════════════════════════════════════════════════════════════
                  WORKSPACE 00 // LOGIN
@@ -321,7 +321,74 @@
                     <div class="text-zinc-500 text-[11px]">System Status: <span class="text-emerald-400 font-bold">Operational</span></div>
                 </footer>
             </section>
+            
+            <!-- ═══════════════════════════════════════════════════════════════
+             WORKSPACE 05 // EXPERIENCE & EDUCATION — git log timeline
+            ════════════════════════════════════════════════════════════════ -->
+            <section id="desktop-experience" class="w-screen h-full shrink-0 flex flex-col justify-between relative bg-[#06080a]">
+                <div class="flex-grow p-4 md:p-8 flex items-center justify-center overflow-hidden">
+                    <div class="w-full max-w-6xl bg-[#090d13]/90 border border-zinc-800 rounded-xl shadow-2xl p-4 md:p-6 font-mono text-sm h-[82vh] flex flex-col">
 
+                        <!-- Title bar -->
+                        <div class="flex items-center justify-between pb-3 border-b border-zinc-800/80 mb-4 shrink-0">
+                            <span class="text-zinc-500 text-xs">REPO://SUSHANT-PRASAI/CAREER.GIT</span>
+                            <div class="flex space-x-1.5">
+                                <span class="w-2.5 h-2.5 bg-[#ff5f56] rounded-full"></span>
+                                <span class="w-2.5 h-2.5 bg-[#ffbd2e] rounded-full"></span>
+                                <span class="w-2.5 h-2.5 bg-[#27c93f] rounded-full"></span>
+                            </div>
+                        </div>
+
+                        <!-- Command line -->
+                        <div class="mb-4 shrink-0 flex items-center gap-2 text-xs">
+                            <span class="text-emerald-400 font-bold">guest@sushant.dev:~$</span>
+                            <span class="text-zinc-300">git log --oneline --graph career.yml</span>
+                            <span class="text-zinc-600 ml-2 animate-pulse">▌</span>
+                        </div>
+
+                        <!-- Two-column body -->
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-grow min-h-0">
+
+                            <!-- LEFT — git log commit list -->
+                            <div class="lg:col-span-4 flex flex-col min-h-0">
+                                <!-- Legend -->
+                                <div class="flex items-center gap-4 mb-3 shrink-0 text-[10px] text-zinc-600 font-mono">
+                                    <span>▸ work</span>
+                                    <span>✦ education</span>
+                                    <span>◆ activity</span>
+                                </div>
+                                <!-- Timeline line container -->
+                                <div class="relative border-l border-zinc-800/60 ml-1 overflow-y-auto custom-scrollbar min-h-0 flex-grow">
+                                    <div id="exp-list" class="pr-1">
+                                        <!-- Populated by experience.js -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- RIGHT — detail panel -->
+                            <div class="lg:col-span-8 bg-[#040608] border border-zinc-800/80 rounded-lg p-4
+                                        flex flex-col min-h-0 text-xs text-zinc-400">
+                                <div id="exp-detail-panel" class="overflow-y-auto custom-scrollbar flex-1 min-h-0 space-y-0">
+                                    <!-- Populated by experience.js -->
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Footer hint bar -->
+                        <div class="mt-4 pt-2 border-t border-zinc-800/40 flex items-center justify-between text-xs text-zinc-500 shrink-0">
+                            <span class="animate-pulse text-emerald-500/80">↓ Scroll down for Certifications</span>
+                            <span class="text-zinc-600 font-bold">[Workspace: 05 // Experience]</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10">
+                    <div><span class="text-emerald-400 font-bold">Workspace: 05 // Experience & Education</span></div>
+                    <div class="text-zinc-500 text-[11px]">System Status: <span class="text-emerald-400 font-bold">Operational</span></div>
+                </footer>
+            </section>
 
            <!-- ═══════════════════════════════════════════════════════════════
             WORKSPACE 05 // CERTIFICATIONS — kubectl get certificates
@@ -409,6 +476,7 @@
     <script src="js/projects.js"></script>
     <script src="js/skills.js"></script>
     <script src="js/certifications.js"></script>
+    <script src="js/experience.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

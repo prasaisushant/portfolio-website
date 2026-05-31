@@ -20,10 +20,10 @@ let bootTimeout;
 
 // ─── Shared Navigation Constants ─────────────────────────────────────────────
 const TRANSITION_DURATION = 850; // Must match duration-[850ms] in HTML
-const TOTAL_WORKSPACES    = 7;   // Must match w-[700vw] and pageOffsets in terminal.js
+const TOTAL_WORKSPACES    = 8;   // Must match w-[800vw] and pageOffsets in terminal.js
 
 // ─── Workspace State ──────────────────────────────────────────────────────────
-let activeWorkspaceIndex = 0;    // 0=Login  1=About  2=Terminal  3=Projects  4=Skills  5=Certifications  6=Contacts
+let activeWorkspaceIndex = 0;    // 0=Login 1=About 2=Terminal 3=Projects 4=Skills 5=Experience 6=Certifications 7=Contacts
 let scrollThrottled      = false;
 
 // ─── Boot Sequence ────────────────────────────────────────────────────────────
@@ -168,4 +168,5 @@ window.addEventListener("DOMContentLoaded", () => {
     initProjectsPage(); 
     initSkillsPage();
     initCertificationsPage();
+    initExperiencePage();
 });
