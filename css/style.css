@@ -1,13 +1,17 @@
-/* Core Custom Animations and Layout Bounds Map Configurations */
+/* ─── Transition Easing ───────────────────────────────────────────────────── */
 .ease-out-quint {
     transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
+/* ─── CRT Scanline Overlay ────────────────────────────────────────────────── */
 .crt-overlay {
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.22) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+    background:
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.22) 50%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
     background-size: 100% 4px, 6px 100%;
 }
 
+/* ─── Glass Card ──────────────────────────────────────────────────────────── */
 .glass-card {
     background: rgba(15, 15, 20, 0.7);
     backdrop-filter: blur(20px);
@@ -15,6 +19,7 @@
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 
+/* ─── Login Button ────────────────────────────────────────────────────────── */
 .liquid-glass-btn {
     background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.05) 100%);
     border: 1px solid rgba(16, 185, 129, 0.3);
@@ -30,16 +35,17 @@
     transform: translateY(-1px);
 }
 
+/* ─── Typewriter Cursor ───────────────────────────────────────────────────── */
 .typewriter-cursor {
     animation: blink 0.8s infinite;
 }
 
 @keyframes blink {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+    50%       { opacity: 0; }
 }
 
-/* Custom Scrollbar layout for the terminal interior text frame space */
+/* ─── Global Scrollbar ────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -51,5 +57,20 @@
     border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
+    background: #10b981;
+}
+
+/* ─── Custom Scrollbar (named class for explicit opt-in on containers) ─────── */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #1f2937;
+    border-radius: 2px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #10b981;
 }

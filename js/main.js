@@ -1,6 +1,9 @@
 /**
- * Master Environment Navigation Orchestrator Layer
+ * Master Environment Navigation Orchestrator
+ * Single source of truth for workspace index state and scroll handling.
+ * terminal.js calls window.navigateTo() to move the viewport.
  */
+
 const systemBootLogs = [
     "Initializing secure kernel-level architecture protocols...",
     "Verifying cloud configuration clusters... [OK]",
@@ -15,15 +18,18 @@ const systemBootLogs = [
 let bootStep = 0;
 let bootTimeout;
 
-// NAVIGATION CONTROL VECTOR STATE MATRIX
-let activeWorkspaceIndex = 0; // 0: Login, 1: About Me, 2: Terminal Shell
-let scrollThrottleGuard = false;
-const animationHoldDuration = 900; 
+// ─── Shared Navigation Constants ─────────────────────────────────────────────
+const TRANSITION_DURATION = 850; // Must match duration-[850ms] in HTML
+const TOTAL_WORKSPACES    = 7;   // Must match w-[700vw] and pageOffsets in terminal.js
 
+// ─── Workspace State ──────────────────────────────────────────────────────────
+let activeWorkspaceIndex = 0;    // 0=Login  1=About  2=Terminal  3=Projects  4=Skills  5=Certifications  6=Contacts
+let scrollThrottled      = false;
+
+// ─── Boot Sequence ────────────────────────────────────────────────────────────
 function processBootLogging() {
     const logCanvas = document.getElementById("boot-log");
     const logScreen = document.getElementById("boot-screen");
-    
     if (!logCanvas || !logScreen) return;
 
     if (bootStep < systemBootLogs.length) {
@@ -42,71 +48,80 @@ function terminateBootAndShowLogin() {
     clearTimeout(bootTimeout);
     const bootScreen = document.getElementById("boot-screen");
     if (!bootScreen) return;
-    
     bootScreen.style.opacity = '0';
     bootScreen.style.transition = 'opacity 400ms ease-out';
     setTimeout(() => bootScreen.remove(), 400);
 }
 
-// CAROUSEL VIEW MATRIX DISPLACEMENT MAP ENGINE
-function updateWorkspaceViewportPosition() {
+// ─── Core Navigation ─────────────────────────────────────────────────────────
+/**
+ * Move the viewport to the given workspace index.
+ * Exposed globally so terminal.js `go` command can call it without
+ * maintaining its own copy of activeWorkspaceIndex.
+ */
+function navigateTo(index) {
+    if (index < 0 || index >= TOTAL_WORKSPACES) return;
+
+    activeWorkspaceIndex = index;
     const wrapper = document.getElementById("desktop-wrapper");
-    const termInput = document.getElementById("terminal-input");
     if (!wrapper) return;
 
-    // Calculate structural percent offsets horizontally across display bounds
-    const displacementValue = activeWorkspaceIndex * -100;
-    wrapper.style.transform = `translateX(${displacementValue}vw)`;
+    wrapper.style.transform = `translateX(${activeWorkspaceIndex * -100}vw)`;
 
-    // Handle interactive element state changes based on visibility fields
+    // Enable / disable terminal input depending on visibility
+    const termInput = document.getElementById("terminal-input");
     if (activeWorkspaceIndex === 2) {
         setTimeout(() => {
             if (termInput) {
                 termInput.removeAttribute("disabled");
                 termInput.focus();
             }
-        }, animationHoldDuration);
+        }, TRANSITION_DURATION);
     } else {
         if (termInput) termInput.setAttribute("disabled", "true");
     }
 }
 
-// PROGRAMMATIC DEBOUNCED MOUSE WHEEL ROTATION PARSER INTERCEPTOR
-function handleSystemViewportScroll(e) {
-    // Block scroll action routines if active on Login workspace screen index
+// Expose globally for terminal.js
+window.navigateTo = navigateTo;
+
+// ─── Scroll Handler ───────────────────────────────────────────────────────────
+function handleViewportScroll(e) {
+    // Lock out scroll navigation while on Login screen
     if (activeWorkspaceIndex === 0) return;
-    if (scrollThrottleGuard) return;
+    if (scrollThrottled) return;
 
-    const directionalDelta = e.deltaY;
-    let baselineStateChanged = false;
+    // If the mouse is inside the terminal body, let it scroll internally
+    // unless it has already hit its boundary (handled in terminal.js scroll setup)
+    const terminalBody = document.getElementById("terminal-body");
+    if (terminalBody && terminalBody.contains(e.target)) {
+        const isScrollingUp   = e.deltaY < 0;
+        const isScrollingDown = e.deltaY > 0;
+        const atTop    = terminalBody.scrollTop === 0;
+        const atBottom = Math.ceil(terminalBody.scrollTop + terminalBody.clientHeight) >= terminalBody.scrollHeight;
 
-    if (directionalDelta > 30) {
-        // User scrolled down -> Step forward horizontally to next index
-        if (activeWorkspaceIndex < 2) { // Caps movement path threshold dynamically at index 2 for now
-            activeWorkspaceIndex++;
-            baselineStateChanged = true;
-        } else if (activeWorkspaceIndex === 2) {
-            // Skeleton trigger log warning for upcoming projects section placeholder
-            console.log("Next workspace: Project Matrix Space Pipeline target slot.");
-        }
-    } else if (directionalDelta < -30) {
-        // User scrolled up -> Step backward horizontally to previous index
-        if (activeWorkspaceIndex > 1) { 
-            activeWorkspaceIndex--;
-            baselineStateChanged = true;
-        }
+        if (isScrollingUp   && !atTop)    return;
+        if (isScrollingDown && !atBottom) return;
     }
 
-    if (baselineStateChanged) {
-        scrollThrottleGuard = true;
-        updateWorkspaceViewportPosition();
-        setTimeout(() => {
-            scrollThrottleGuard = false;
-        }, animationHoldDuration);
+    let changed = false;
+
+    if (e.deltaY > 30 && activeWorkspaceIndex < TOTAL_WORKSPACES - 1) {
+        activeWorkspaceIndex++;
+        changed = true;
+    } else if (e.deltaY < -30 && activeWorkspaceIndex > 1) {
+        activeWorkspaceIndex--;
+        changed = true;
+    }
+
+    if (changed) {
+        scrollThrottled = true;
+        navigateTo(activeWorkspaceIndex);
+        setTimeout(() => { scrollThrottled = false; }, TRANSITION_DURATION);
     }
 }
 
-// Global Environment Interaction Bindings Initializer Matrix
+// ─── DOMContentLoaded ─────────────────────────────────────────────────────────
 window.addEventListener("DOMContentLoaded", () => {
     processBootLogging();
 
@@ -114,28 +129,22 @@ window.addEventListener("DOMContentLoaded", () => {
         if (e.key === "Escape") terminateBootAndShowLogin();
     });
 
-    // Capture vertical wheel loops to map horizontal desktop animations
-    window.addEventListener("wheel", handleSystemViewportScroll, { passive: true });
+    // Single wheel listener — terminal.js scroll engine removed
+    window.addEventListener("wheel", handleViewportScroll, { passive: true });
 
-    // Handle Login Button execution flow
+    // Login button
     const btnLogin = document.getElementById("btn-login");
     if (btnLogin) {
-        btnLogin.addEventListener("click", () => {
-            activeWorkspaceIndex = 1; // Advance directly into Neofetch About Me Desktop Screen
-            updateWorkspaceViewportPosition();
-        });
+        btnLogin.addEventListener("click", () => navigateTo(1));
     }
 
-    // Handle structural redirection action rule targeting Close terminal button layout elements
+    // Terminal close button
     const btnCloseTerminal = document.getElementById("btn-terminal-close");
     if (btnCloseTerminal) {
-        btnCloseTerminal.addEventListener("click", () => {
-            activeWorkspaceIndex = 0; // Drop directly backwards onto initial gatekeeper login grid card layout
-            updateWorkspaceViewportPosition();
-        });
+        btnCloseTerminal.addEventListener("click", () => navigateTo(0));
     }
 
-    // Force Terminal window input layout focus behaviors on clean background element clicks
+    // Click anywhere in terminal body to refocus input
     const termBody = document.getElementById("terminal-body");
     if (termBody) {
         termBody.addEventListener("click", () => {
@@ -145,14 +154,218 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Simple common system background loop monitoring system clock instances
+    // Live clock — updates both footer clocks
     setInterval(() => {
         const timeString = new Date().toUTCString().replace("GMT", "UTC");
-        const mainClock = document.getElementById("live-clock");
+        const mainClock  = document.getElementById("live-clock");
         const aboutClock = document.getElementById("about-clock");
-        if (mainClock) mainClock.textContent = timeString;
+        if (mainClock)  mainClock.textContent  = timeString;
         if (aboutClock) aboutClock.textContent = timeString;
     }, 1000);
 
+    // Terminal shell init — called ONCE here only (terminal.js does NOT call it again)
     initializeTerminalShell();
 });
+
+/**
+ * Projects Page Engine
+ * Fetches projects.json, renders the left card list dynamically,
+ * and populates the right detail panel on card click.
+ */
+
+// ─── Color maps for the accent/status theme per project ──────────────────────
+const COLOR = {
+    emerald: {
+        border:      'hover:border-emerald-500/40',
+        accent:      'bg-emerald-500',
+        titleHover:  'group-hover:text-emerald-400',
+        statusBg:    'bg-emerald-950/80',
+        statusText:  'text-emerald-400',
+        statusBorder:'border-emerald-800/60',
+        activeBorder:'border-emerald-500/70',
+        tag:         'text-emerald-400',
+        linkBg:      'bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+        highlight:   'text-emerald-400',
+    },
+    cyan: {
+        border:      'hover:border-cyan-500/40',
+        accent:      'bg-cyan-500',
+        titleHover:  'group-hover:text-cyan-400',
+        statusBg:    'bg-cyan-950/80',
+        statusText:  'text-cyan-400',
+        statusBorder:'border-cyan-800/60',
+        activeBorder:'border-cyan-500/70',
+        tag:         'text-cyan-400',
+        linkBg:      'bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+        highlight:   'text-cyan-400',
+    },
+    amber: {
+        border:      'hover:border-amber-400/40',
+        accent:      'bg-amber-400',
+        titleHover:  'group-hover:text-amber-400',
+        statusBg:    'bg-amber-950/80',
+        statusText:  'text-amber-400',
+        statusBorder:'border-amber-800/60',
+        activeBorder:'border-amber-400/70',
+        tag:         'text-amber-400',
+        linkBg:      'bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border-amber-500/30',
+        highlight:   'text-amber-400',
+    },
+};
+
+let projectsData   = [];
+let activeProjectId = null;
+
+// ─── Bootstrap ────────────────────────────────────────────────────────────────
+async function initProjectsPage() {
+    try {
+        const res  = await fetch('projects.json');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        projectsData = await res.json();
+        renderProjectCards();
+        if (projectsData.length > 0) selectProject(projectsData[0].id);
+    } catch (err) {
+        console.error('Failed to load projects.json:', err);
+        document.getElementById('project-card-list').innerHTML =
+            `<p class="text-red-400 text-xs font-mono p-4">[ERROR] Could not load projects.json: ${err.message}</p>`;
+    }
+}
+
+// ─── Left panel — card list ───────────────────────────────────────────────────
+function renderProjectCards() {
+    const list = document.getElementById('project-card-list');
+    if (!list) return;
+    list.innerHTML = '';
+
+    projectsData.forEach(p => {
+        const c = COLOR[p.accentColor] || COLOR.emerald;
+        const card = document.createElement('div');
+        card.id = `project-card-${p.id}`;
+        card.className = [
+            'group p-4 bg-[#0d131a] border border-zinc-800/80',
+            c.border,
+            'rounded-lg transition-all duration-200 cursor-pointer relative overflow-hidden'
+        ].join(' ');
+
+        card.innerHTML = `
+            <div class="absolute top-0 left-0 w-1 h-full ${c.accent}"></div>
+            <div class="flex justify-between items-start mb-1.5">
+                <h4 class="text-white font-bold tracking-wide ${c.titleHover} transition-colors text-xs md:text-sm">${p.slug}</h4>
+                <span class="px-2 py-0.5 text-[10px] rounded font-bold ${c.statusBg} ${c.statusText} border ${c.statusBorder} whitespace-nowrap ml-2">${p.status}</span>
+            </div>
+            <p class="text-zinc-400 text-xs leading-relaxed mb-2.5">${p.summary}</p>
+            <div class="flex flex-wrap gap-1.5 text-[11px]">
+                ${p.tools.slice(0, 4).map(t => `<span class="bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-zinc-400 rounded">${t}</span>`).join('')}
+                ${p.tools.length > 4 ? `<span class="bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-zinc-500 rounded">+${p.tools.length - 4} more</span>` : ''}
+            </div>
+        `;
+
+        card.addEventListener('click', () => selectProject(p.id));
+        list.appendChild(card);
+    });
+}
+
+// ─── Right panel — detail view ────────────────────────────────────────────────
+function selectProject(id) {
+    const p = projectsData.find(x => x.id === id);
+    if (!p) return;
+
+    activeProjectId = id;
+    const c = COLOR[p.accentColor] || COLOR.emerald;
+
+    // Highlight the active card on the left
+    projectsData.forEach(x => {
+        const card = document.getElementById(`project-card-${x.id}`);
+        if (!card) return;
+        const xc = COLOR[x.accentColor] || COLOR.emerald;
+        // Reset to default border
+        card.className = card.className
+            .replace(/border-\S+\/\d+\s*/g, '')
+            .trim();
+        card.classList.add('border', 'border-zinc-800/80');
+        if (x.id === id) {
+            card.classList.remove('border-zinc-800/80');
+            card.classList.add(xc.activeBorder);
+        }
+    });
+
+    // Build detail panel content
+    const panel = document.getElementById('project-detail-panel');
+    if (!panel) return;
+
+    const highlightItems = p.highlights.map(h =>
+        `<li class="flex items-start gap-2">
+            <span class="${c.highlight} font-bold shrink-0">▸</span>
+            <span>${h}</span>
+         </li>`
+    ).join('');
+
+    const allTools = p.tools.map(t =>
+        `<span class="bg-zinc-900 border border-zinc-800 px-2 py-0.5 text-zinc-300 rounded text-[11px]">${t}</span>`
+    ).join('');
+
+    const imageBlock = p.image
+        ? `<div class="mb-3 rounded overflow-hidden border border-zinc-800/60">
+               <img src="${p.image}" alt="${p.title} screenshot" class="w-full object-cover max-h-36">
+           </div>`
+        : `<div class="mb-3 rounded border border-zinc-800/60 bg-[#0a0e14] h-24 flex items-center justify-center">
+               <span class="text-zinc-700 text-[10px] font-mono">// no screenshot attached</span>
+           </div>`;
+
+    const githubBtn = p.github
+        ? `<a href="${p.github}" target="_blank" rel="noopener"
+               class="flex-1 flex items-center justify-center gap-1.5 py-2 ${c.linkBg} border rounded font-bold transition-all text-center text-[11px]">
+               <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.4.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.48 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.69.82.57C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+               GitHub
+           </a>`
+        : '';
+
+    const liveBtn = p.live
+        ? `<a href="${p.live}" target="_blank" rel="noopener"
+               class="flex-1 flex items-center justify-center gap-1.5 py-2 bg-zinc-800/60 hover:bg-zinc-700/60 text-zinc-300 border border-zinc-700 rounded font-bold transition-all text-center text-[11px]">
+               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+               Live
+           </a>`
+        : '';
+
+    panel.innerHTML = `
+        <div class="flex items-center gap-2 border-b border-zinc-900 pb-2.5 mb-3">
+            <span class="w-2 h-2 rounded-full ${c.accent} animate-pulse shrink-0"></span>
+            <span class="font-bold tracking-widest text-[10px] uppercase text-zinc-400">kubectl describe pod</span>
+        </div>
+
+        ${imageBlock}
+
+        <div class="space-y-0.5 mb-3 text-[11px]">
+            <p class="text-zinc-300"><span class="${c.highlight} font-bold">Name:</span> ${p.title}</p>
+            <p class="text-zinc-300"><span class="${c.highlight} font-bold">Role:</span> ${p.role}</p>
+            <p class="text-zinc-300"><span class="${c.highlight} font-bold">Year:</span> ${p.year} &nbsp;|&nbsp; <span class="${c.highlight} font-bold">Duration:</span> ${p.duration}</p>
+            <p class="text-zinc-300"><span class="${c.highlight} font-bold">Status:</span> <span class="${c.statusText} font-bold">${p.status}</span></p>
+        </div>
+
+        <div class="mb-3 bg-[#090d13]/50 p-2.5 border border-zinc-900 rounded text-[11px] leading-relaxed text-zinc-400">
+            ${p.description}
+        </div>
+
+        <div class="mb-3">
+            <p class="${c.highlight} font-bold text-[10px] uppercase tracking-widest mb-1.5">Key Highlights</p>
+            <ul class="space-y-1 text-zinc-400 text-[11px] leading-relaxed">
+                ${highlightItems}
+            </ul>
+        </div>
+
+        <div class="mb-3">
+            <p class="${c.highlight} font-bold text-[10px] uppercase tracking-widest mb-1.5">Stack</p>
+            <div class="flex flex-wrap gap-1.5">${allTools}</div>
+        </div>
+
+        ${(githubBtn || liveBtn) ? `
+        <div class="pt-2 border-t border-zinc-900 flex gap-2">
+            ${githubBtn}
+            ${liveBtn}
+        </div>` : ''}
+    `;
+}
+
+// ─── Entry point — called after DOM is ready ──────────────────────────────────
+// initProjectsPage() is called from main.js DOMContentLoaded

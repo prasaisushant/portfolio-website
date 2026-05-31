@@ -1,5 +1,5 @@
 /**
- * Typewriter Loop Engine - Handles Login Rotating Headlines
+ * Typewriter Loop Engine — Login screen rotating headlines
  */
 const phrases = [
     "DevOps Engineer",
@@ -10,41 +10,44 @@ const phrases = [
 ];
 
 let currentPhraseIndex = 0;
-let currentCharIndex = 0;
-let isDeleting = false;
-const typingSpeed = 100;
-const deletingSpeed = 50;
-const pauseBetweenPhrases = 2000;
+let currentCharIndex   = 0;
+let isDeleting         = false;
+
+const TYPING_SPEED   = 100;
+const DELETING_SPEED = 50;
+const PAUSE_AFTER    = 2000;
+const PAUSE_BEFORE   = 500;
 
 function tickTypewriter() {
-    const targetElement = document.getElementById("typewriter-text");
-    if (!targetElement) return;
+    const el = document.getElementById("typewriter-text");
+    if (!el) return;
 
-    const currentPhrase = phrases[currentPhraseIndex];
-    
+    const phrase = phrases[currentPhraseIndex];
+
     if (isDeleting) {
-        targetElement.textContent = currentPhrase.substring(0, currentCharIndex - 1);
         currentCharIndex--;
+        el.textContent = phrase.substring(0, currentCharIndex);
     } else {
-        targetElement.textContent = currentPhrase.substring(0, currentCharIndex + 1);
         currentCharIndex++;
+        el.textContent = phrase.substring(0, currentCharIndex);
     }
 
-    let currentDelay = isDeleting ? deletingSpeed : typingSpeed;
+    let delay = isDeleting ? DELETING_SPEED : TYPING_SPEED;
 
-    if (!isDeleting && currentCharIndex === currentPhrase.length) {
+    if (!isDeleting && currentCharIndex === phrase.length) {
+        // Finished typing — pause, then start deleting
         isDeleting = true;
-        currentDelay = pauseBetweenPhrases; // Hold position
+        delay = PAUSE_AFTER;
     } else if (isDeleting && currentCharIndex === 0) {
+        // Finished deleting — move to next phrase
         isDeleting = false;
         currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-        currentDelay = 500; // Breath pause before typing next
+        delay = PAUSE_BEFORE;
     }
 
-    setTimeout(tickTypewriter, currentDelay);
+    setTimeout(tickTypewriter, delay);
 }
 
-// Start sequence when file is processed
 window.addEventListener("DOMContentLoaded", () => {
     setTimeout(tickTypewriter, 1000);
 });
