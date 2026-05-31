@@ -257,21 +257,71 @@
             <!-- ═══════════════════════════════════════════════════════════════
                  WORKSPACE 04 // SKILLS  (placeholder — add your content here)
             ════════════════════════════════════════════════════════════════ -->
+           
             <section id="desktop-skills" class="w-screen h-full shrink-0 flex flex-col justify-between relative bg-[#06080a]">
-                <div class="flex-grow p-4 md:p-8 flex items-center justify-center">
-                    <div class="w-full max-w-5xl bg-[#090d13]/90 border border-zinc-800 rounded-xl shadow-2xl p-6 md:p-8 font-mono text-sm flex items-center justify-center h-[82vh]">
-                        <div class="text-center space-y-4">
-                            <p class="text-zinc-600 text-xs uppercase tracking-widest">workspace 04</p>
-                            <h2 class="text-emerald-400 font-bold text-2xl">Skills</h2>
-                            <p class="text-zinc-500 text-sm">Content coming soon. Type <span class="text-emerald-400">'skills'</span> in the terminal to preview.</p>
+                <div class="flex-grow p-4 md:p-8 flex items-center justify-center overflow-hidden">
+                    <div class="w-full max-w-6xl bg-[#090d13]/90 border border-zinc-800 rounded-xl shadow-2xl p-4 md:p-6 font-mono text-sm h-[82vh] flex flex-col">
+
+                        <!-- Title bar -->
+                        <div class="flex items-center justify-between pb-3 border-b border-zinc-800/80 mb-4 shrink-0">
+                            <span class="text-zinc-500 text-xs">REGISTRY://LOCAL/SKILL-MODULES/INSTALLED</span>
+                            <div class="flex space-x-1.5">
+                                <span class="w-2.5 h-2.5 bg-[#ff5f56] rounded-full"></span>
+                                <span class="w-2.5 h-2.5 bg-[#ffbd2e] rounded-full"></span>
+                                <span class="w-2.5 h-2.5 bg-[#27c93f] rounded-full"></span>
+                            </div>
                         </div>
+
+                        <!-- Search + Filter bar -->
+                        <div class="flex flex-col sm:flex-row gap-3 mb-4 shrink-0">
+                            <!-- Search -->
+                            <div class="relative flex-grow">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-xs font-bold select-none">~/</span>
+                                <input
+                                    id="skills-search"
+                                    type="text"
+                                    placeholder="search modules..."
+                                    autocomplete="off"
+                                    spellcheck="false"
+                                    class="w-full bg-[#0d131a] border border-zinc-800 focus:border-emerald-500/50 rounded-lg pl-8 pr-4 py-2 text-xs text-zinc-300 placeholder-zinc-600 outline-none transition-colors duration-200 font-mono"
+                                >
+                            </div>
+                            <!-- Category pills -->
+                            <div id="skills-filter-bar" class="flex gap-2 flex-wrap sm:flex-nowrap shrink-0">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Legend -->
+                        <div class="flex items-center gap-4 mb-3 shrink-0 text-[10px] text-zinc-500 font-mono">
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-500 inline-block"></span>Expert</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-cyan-500 inline-block"></span>Proficient</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-amber-400 inline-block"></span>Familiar</span>
+                            <span class="ml-auto text-zinc-600" id="skills-count"></span>
+                        </div>
+
+                        <!-- Grid -->
+                        <div id="skills-grid" class="overflow-y-auto custom-scrollbar min-h-0 flex-grow">
+                            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-3 pb-2">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Footer hint bar -->
+                        <div class="mt-4 pt-2 border-t border-zinc-800/40 flex items-center justify-between text-xs text-zinc-500 shrink-0">
+                            <span class="animate-pulse text-emerald-500/80">↓ Scroll down for Certifications</span>
+                            <span class="text-zinc-600 font-bold">[Workspace: 04 // Skills]</span>
+                        </div>
+
                     </div>
                 </div>
+
                 <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10">
                     <div><span class="text-emerald-400 font-bold">Workspace: 04 // Skills</span></div>
                     <div class="text-zinc-500 text-[11px]">System Status: <span class="text-emerald-400 font-bold">Operational</span></div>
                 </footer>
             </section>
+
 
             <!-- ═══════════════════════════════════════════════════════════════
                  WORKSPACE 05 // CERTIFICATIONS  (placeholder)
@@ -317,6 +367,7 @@
     <script src="js/typewriter.js"></script>
     <script src="js/terminal.js"></script>
     <script src="js/projects.js"></script>
+    <script src="js/skills.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

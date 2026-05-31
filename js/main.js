@@ -166,4 +166,5 @@ window.addEventListener("DOMContentLoaded", () => {
     // Terminal shell init — called ONCE here only (terminal.js does NOT call it again)
     initializeTerminalShell();
     initProjectsPage(); 
+    initSkillsPage();
 });
