@@ -121,13 +121,59 @@ function handleViewportScroll(e) {
     }
 }
 
+// ─── Keyboard Navigation Handler ─────────────────────────────────────────────
+function handleKeyNavigation(e) {
+    // Always allow Escape to skip boot
+    if (e.key === "Escape") {
+        terminateBootAndShowLogin();
+        return;
+    }
+
+    // Arrow / Page keys only — ignore everything else
+    const NAV_KEYS = ["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight", "PageDown", "PageUp"];
+    if (!NAV_KEYS.includes(e.key)) return;
+
+    // Lock out on Login screen (index 0) — by design, can't keyboard-nav away from login
+    if (activeWorkspaceIndex === 0) return;
+
+    // If the terminal input is focused, let arrow keys serve the input (history nav)
+    // Only suppress workspace nav when terminal workspace is active
+    if (activeWorkspaceIndex === 2) {
+        const termInput = document.getElementById("terminal-input");
+        if (termInput && document.activeElement === termInput) return;
+    }
+
+    // Respect throttle — same rule as wheel scroll
+    if (scrollThrottled) return;
+
+    const goForward = ["ArrowDown", "ArrowRight", "PageDown"].includes(e.key);
+    const goBack    = ["ArrowUp",   "ArrowLeft",  "PageUp"  ].includes(e.key);
+
+    let changed = false;
+
+    if (goForward && activeWorkspaceIndex < TOTAL_WORKSPACES - 1) {
+        activeWorkspaceIndex++;
+        changed = true;
+    } else if (goBack && activeWorkspaceIndex > 1) {
+        // Floor at 1 (About) — Login (0) is only reachable via "close session"
+        activeWorkspaceIndex--;
+        changed = true;
+    }
+
+    if (changed) {
+        // Prevent the key from scrolling any inner scrollable containers
+        e.preventDefault();
+        scrollThrottled = true;
+        navigateTo(activeWorkspaceIndex);
+        setTimeout(() => { scrollThrottled = false; }, TRANSITION_DURATION);
+    }
+}
+
 // ─── DOMContentLoaded ─────────────────────────────────────────────────────────
 window.addEventListener("DOMContentLoaded", () => {
     processBootLogging();
 
-    window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") terminateBootAndShowLogin();
-    });
+    window.addEventListener("keydown", handleKeyNavigation);
 
     // Single wheel listener — terminal.js scroll engine removed
     window.addEventListener("wheel", handleViewportScroll, { passive: true });
