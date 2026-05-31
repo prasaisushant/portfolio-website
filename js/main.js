@@ -167,4 +167,5 @@ window.addEventListener("DOMContentLoaded", () => {
     initializeTerminalShell();
     initProjectsPage(); 
     initSkillsPage();
+    initCertificationsPage();
 });
