@@ -66,8 +66,8 @@ function navigateTo(index) {
     const wrapper = document.getElementById("desktop-wrapper");
     if (!wrapper) return;
 
+    // wrapper.style.transform = `translateX(${activeWorkspaceIndex * -100}vw)`;
     wrapper.style.transform = `translateX(${activeWorkspaceIndex * -100}vw)`;
-
     // Enable / disable terminal input depending on visibility
     const termInput = document.getElementById("terminal-input");
     if (activeWorkspaceIndex === 2) {
@@ -84,6 +84,30 @@ function navigateTo(index) {
 
 // Expose globally for terminal.js
 window.navigateTo = navigateTo;
+
+// ─── Footer Nav Sync ──────────────────────────────────────────────────────────
+function syncFooterNav(index) {
+    document.querySelectorAll('.footer-nav-pip').forEach(pip => {
+        const pipIndex = parseInt(pip.dataset.index);
+        const isActive = pipIndex === index;
+        const isLogin  = pipIndex === 0;
+
+        pip.classList.toggle('text-emerald-400',  isActive);
+        pip.classList.toggle('border-emerald-500', isActive);
+        pip.classList.toggle('bg-emerald-950/60',  isActive);
+        pip.classList.toggle('text-zinc-600',      !isActive);
+        pip.classList.toggle('border-zinc-800',    !isActive);
+        pip.classList.toggle('bg-transparent',     !isActive);
+
+        // Login pip is never clickable once session has started
+        if (isLogin) {
+            pip.classList.add('opacity-30', 'cursor-not-allowed');
+            pip.onclick = null;
+        } else {
+            pip.onclick = () => window.navigateTo(pipIndex);
+        }
+    });
+}
 
 // ─── Scroll Handler ───────────────────────────────────────────────────────────
 function handleViewportScroll(e) {
@@ -215,4 +239,5 @@ window.addEventListener("DOMContentLoaded", () => {
     initSkillsPage();
     initCertificationsPage();
     initExperiencePage();
+    syncFooterNav(activeWorkspaceIndex);
 });

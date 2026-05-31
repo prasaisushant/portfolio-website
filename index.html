@@ -130,10 +130,20 @@
                     </div>
                 </div>
 
-                <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10">
-                    <div><span class="text-emerald-400 font-bold">Workspace: 01 // About</span></div>
-                    <div id="about-clock" class="text-zinc-300">00:00:00 UTC</div>
-                </footer>
+                <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10 relative">
+    <div><span class="text-emerald-400 font-bold">Workspace: 01 // About</span></div>
+    <nav class="hidden sm:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+        <span data-index="0" class="footer-nav-pip opacity-30 cursor-not-allowed px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150">LOGIN</span>
+        <span data-index="1" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">ABOUT</span>
+        <span data-index="2" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">TERM</span>
+        <span data-index="3" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">PROJ</span>
+        <span data-index="4" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">SKILLS</span>
+        <span data-index="5" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">EXP</span>
+        <span data-index="6" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">CERTS</span>
+        <span data-index="7" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">CONTACT</span>
+    </nav>
+    <div id="about-clock" class="text-zinc-300">00:00:00 UTC</div>
+</footer>
             </section>
 
             <!-- ═══════════════════════════════════════════════════════════════
@@ -156,12 +166,12 @@
                         <div id="terminal-body" class="flex-1 p-6 overflow-y-auto space-y-4 font-mono text-sm text-zinc-300">
                             <div class="space-y-1">
                                 <pre class="text-emerald-400 font-bold leading-tight text-xs md:text-sm">
- _____  _   _  _____  _   _   ___   _   _ _____ ______  _____ _   _ 
-/  ___|| | | |/  ___|| | | | / _ \ | \ | |_   _|  __  \|  _  | | | |
-\ `--. | | | |\ `--. | |_| |/ /_\ \|  \| | | | | |__)  | | | | | | |
- `--. \| | | | `--. \|  _  ||  _  || . ` | | | |  ___  | | | | | | |
-/\__/ /| |_| |/\__/ /| | | || | | || |\  | | | | |   \ \ \_/ / |_| |
-\____/  \___/ \____/ \_| |_/\_| |_/\_| \_/ \_/ |_|    \/\___/ \___/ </pre>
+ _____  _   _  _____  _   _   ___   _   _ _____ 
+/  ___|| | | |/  ___|| | | | / _ \ | \ | |_   _|
+\ `--. | | | |\ `--. | |_| |/ /_\ \|  \| | | | 
+ `--. \| | | | `--. \|  _  ||  _  || . ` | | | 
+/\__/ /| |_| |/\__/ /| | | || | | || |\  | | |
+\____/  \___/ \____/ \_| |_/\_| |_/\_| \_/ \_/  </pre>
                                 <h1 class="text-white font-bold text-base mt-2">Sushant Prasai — Infrastructure Console</h1>
                                 <p class="text-zinc-500 text-xs">Type <span class="text-emerald-400 font-semibold">'help'</span> for a command list. Press <kbd class="bg-zinc-800 px-1 py-0.5 rounded text-[10px] text-white">TAB</kbd> to autocomplete. Use <kbd class="bg-zinc-800 px-1 py-0.5 rounded text-[10px] text-white">↑</kbd><kbd class="bg-zinc-800 px-1 py-0.5 rounded text-[10px] text-white">↓</kbd> for history.</p>
                                 <div class="w-full h-px bg-zinc-800/60 my-3"></div>
@@ -179,17 +189,22 @@
                     </div>
                 </div>
 
-                <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10">
-                    <div class="flex items-center space-x-4">
-                        <span class="text-emerald-400 font-bold flex items-center gap-1.5">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-ping"></span>
-                            Workspace: 02 // Terminal
-                        </span>
-                    </div>
-                    <div class="flex items-center space-x-6">
-                        <div class="text-zinc-500 text-[10px] animate-pulse">↑ About | ↓ Projects</div>
-                        <span id="live-clock" class="text-zinc-300 font-medium font-mono">00:00:00 UTC</span>
-                    </div>
+                <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10 relative">
+                    <span class="text-emerald-400 font-bold flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-ping"></span>
+                        Workspace: 02 // Terminal
+                    </span>
+                    <nav class="hidden sm:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+                        <span data-index="0" class="footer-nav-pip opacity-30 cursor-not-allowed px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150">LOGIN</span>
+                        <span data-index="1" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">ABOUT</span>
+                        <span data-index="2" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">TERM</span>
+                        <span data-index="3" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">PROJ</span>
+                        <span data-index="4" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">SKILLS</span>
+                        <span data-index="5" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">EXP</span>
+                        <span data-index="6" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">CERTS</span>
+                        <span data-index="7" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">CONTACT</span>
+                    </nav>
+                    <span id="live-clock" class="text-zinc-300 font-medium font-mono">00:00:00 UTC</span>
                 </footer>
             </section>
 
@@ -216,11 +231,11 @@
 
                             <!-- LEFT — project card list, populated by projects.js -->
                             <div id="project-card-list"
-     class="lg:col-span-7 overflow-y-auto space-y-3 pr-2 custom-scrollbar min-h-0">
-    <p class="text-zinc-600 text-xs font-mono animate-pulse p-2">
-        [INFO] Fetching project manifests from registry...
-    </p>
-</div>
+                                class="lg:col-span-7 overflow-y-auto space-y-3 pr-2 custom-scrollbar min-h-0">
+                                <p class="text-zinc-600 text-xs font-mono animate-pulse p-2">
+                                    [INFO] Fetching project manifests from registry...
+                                </p>
+                            </div>
 
                             <!-- RIGHT — detail panel, populated by projects.js on card click -->
                             <div class="lg:col-span-5 bg-[#040608] border border-zinc-800/80 rounded-lg p-4
@@ -248,9 +263,28 @@
                     </div>
                 </div>
 
-                <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10">
+                <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10 relative">
                     <div><span class="text-emerald-400 font-bold">Workspace: 03 // Projects</span></div>
-                    <div class="text-zinc-500 text-[11px]">System Status: <span class="text-emerald-400 font-bold">Operational</span></div>
+                    <nav class="hidden sm:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+                        <span data-index="0" class="footer-nav-pip opacity-30 cursor-not-allowed px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150">LOGIN</span>
+                        <span data-index="1" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">ABOUT</span>
+                        <span data-index="2" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">TERM</span>
+                        <span data-index="3" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">PROJ</span>
+                        <span data-index="4" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">SKILLS</span>
+                        <span data-index="5" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">EXP</span>
+                        <span data-index="6" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">CERTS</span>
+                        <span data-index="7" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">CONTACT</span>
+                    </nav>
+                    <div class="flex items-center gap-4">
+                        <button onclick="window.navigateTo(2)"
+                                class="flex items-center gap-1.5 px-2.5 py-1 rounded border border-zinc-700 bg-zinc-800/60 hover:border-emerald-500/50 hover:bg-emerald-950/40 hover:text-emerald-400 transition-all duration-150 cursor-pointer">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3"/>
+                            </svg>
+                            terminal
+                        </button>
+                        <span class="text-zinc-500 text-[11px]">System Status: <span class="text-emerald-400 font-bold">Operational</span></span>
+                    </div>
                 </footer>
             </section>
 
@@ -316,9 +350,28 @@
                     </div>
                 </div>
 
-                <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10">
+                <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10 relative">
                     <div><span class="text-emerald-400 font-bold">Workspace: 04 // Skills</span></div>
-                    <div class="text-zinc-500 text-[11px]">System Status: <span class="text-emerald-400 font-bold">Operational</span></div>
+                    <nav class="hidden sm:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+                        <span data-index="0" class="footer-nav-pip opacity-30 cursor-not-allowed px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150">LOGIN</span>
+                        <span data-index="1" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">ABOUT</span>
+                        <span data-index="2" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">TERM</span>
+                        <span data-index="3" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">PROJ</span>
+                        <span data-index="4" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">SKILLS</span>
+                        <span data-index="5" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">EXP</span>
+                        <span data-index="6" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">CERTS</span>
+                        <span data-index="7" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">CONTACT</span>
+                    </nav>
+                    <div class="flex items-center gap-4">
+                        <button onclick="window.navigateTo(2)"
+                                class="flex items-center gap-1.5 px-2.5 py-1 rounded border border-zinc-700 bg-zinc-800/60 hover:border-emerald-500/50 hover:bg-emerald-950/40 hover:text-emerald-400 transition-all duration-150 cursor-pointer">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3"/>
+                            </svg>
+                            terminal
+                        </button>
+                        <span class="text-zinc-500 text-[11px]">System Status: <span class="text-emerald-400 font-bold">Operational</span></span>
+                    </div>
                 </footer>
             </section>
             
@@ -384,9 +437,28 @@
                     </div>
                 </div>
 
-                <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10">
-                    <div><span class="text-emerald-400 font-bold">Workspace: 05 // Experience & Education</span></div>
-                    <div class="text-zinc-500 text-[11px]">System Status: <span class="text-emerald-400 font-bold">Operational</span></div>
+                <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10 relative">
+                    <div><span class="text-emerald-400 font-bold">Workspace: 05 // Experience</span></div>
+                    <nav class="hidden sm:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+                        <span data-index="0" class="footer-nav-pip opacity-30 cursor-not-allowed px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150">LOGIN</span>
+                        <span data-index="1" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">ABOUT</span>
+                        <span data-index="2" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">TERM</span>
+                        <span data-index="3" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">PROJ</span>
+                        <span data-index="4" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">SKILLS</span>
+                        <span data-index="5" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">EXP</span>
+                        <span data-index="6" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">CERTS</span>
+                        <span data-index="7" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">CONTACT</span>
+                    </nav>
+                    <div class="flex items-center gap-4">
+                        <button onclick="window.navigateTo(2)"
+                                class="flex items-center gap-1.5 px-2.5 py-1 rounded border border-zinc-700 bg-zinc-800/60 hover:border-emerald-500/50 hover:bg-emerald-950/40 hover:text-emerald-400 transition-all duration-150 cursor-pointer">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3"/>
+                            </svg>
+                            terminal
+                        </button>
+                        <span class="text-zinc-500 text-[11px]">System Status: <span class="text-emerald-400 font-bold">Operational</span></span>
+                    </div>
                 </footer>
             </section>
 
@@ -443,9 +515,28 @@
                     </div>
                 </div>
 
-                <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10">
-                    <div><span class="text-emerald-400 font-bold">Workspace: 05 // Certifications</span></div>
-                    <div class="text-zinc-500 text-[11px]">System Status: <span class="text-emerald-400 font-bold">Operational</span></div>
+                <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10 relative">
+                    <div><span class="text-emerald-400 font-bold">Workspace: 06 // Certifications</span></div>
+                    <nav class="hidden sm:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+                        <span data-index="0" class="footer-nav-pip opacity-30 cursor-not-allowed px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150">LOGIN</span>
+                        <span data-index="1" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">ABOUT</span>
+                        <span data-index="2" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">TERM</span>
+                        <span data-index="3" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">PROJ</span>
+                        <span data-index="4" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">SKILLS</span>
+                        <span data-index="5" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">EXP</span>
+                        <span data-index="6" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">CERTS</span>
+                        <span data-index="7" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">CONTACT</span>
+                    </nav>
+                    <div class="flex items-center gap-4">
+                        <button onclick="window.navigateTo(2)"
+                                class="flex items-center gap-1.5 px-2.5 py-1 rounded border border-zinc-700 bg-zinc-800/60 hover:border-emerald-500/50 hover:bg-emerald-950/40 hover:text-emerald-400 transition-all duration-150 cursor-pointer">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3"/>
+                            </svg>
+                            terminal
+                        </button>
+                        <span class="text-zinc-500 text-[11px]">System Status: <span class="text-emerald-400 font-bold">Operational</span></span>
+                    </div>
                 </footer>
             </section>
 
@@ -596,9 +687,28 @@
                     </div>
                 </div>
 
-                <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10">
+                <footer class="bg-[#12161a] border-t border-zinc-800/80 px-6 py-2.5 flex justify-between items-center font-mono text-xs text-zinc-400 z-10 relative">
                     <div><span class="text-emerald-400 font-bold">Workspace: 07 // Contacts</span></div>
-                    <div class="text-zinc-500 text-[11px]">System Status: <span class="text-emerald-400 font-bold">Operational</span></div>
+                    <nav class="hidden sm:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+                        <span data-index="0" class="footer-nav-pip opacity-30 cursor-not-allowed px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150">LOGIN</span>
+                        <span data-index="1" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">ABOUT</span>
+                        <span data-index="2" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">TERM</span>
+                        <span data-index="3" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">PROJ</span>
+                        <span data-index="4" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">SKILLS</span>
+                        <span data-index="5" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">EXP</span>
+                        <span data-index="6" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">CERTS</span>
+                        <span data-index="7" class="footer-nav-pip cursor-pointer px-2 py-0.5 rounded border border-zinc-800 text-zinc-600 text-[9px] font-bold tracking-widest transition-all duration-150 hover:text-zinc-400">CONTACT</span>
+                    </nav>
+                    <div class="flex items-center gap-4">
+                        <button onclick="window.navigateTo(2)"
+                                class="flex items-center gap-1.5 px-2.5 py-1 rounded border border-zinc-700 bg-zinc-800/60 hover:border-emerald-500/50 hover:bg-emerald-950/40 hover:text-emerald-400 transition-all duration-150 cursor-pointer">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3"/>
+                            </svg>
+                            terminal
+                        </button>
+                        <span class="text-zinc-500 text-[11px]">System Status: <span class="text-emerald-400 font-bold">Operational</span></span>
+                    </div>
                 </footer>
             </section>
 
