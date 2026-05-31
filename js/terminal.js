@@ -22,12 +22,12 @@ const commandRegistry = {
     help() {
         return `Available commands:\n` +
                `  <span class="text-emerald-400 font-bold">go <span class="text-purple-400">[page]</span></span>       - Navigate to a workspace (e.g. 'go about')\n` +
-               `  <span class="text-emerald-400 font-bold">about</span>           - System specs and bio\n` +
-               `  <span class="text-emerald-400 font-bold">skills</span>          - Core competencies and tech stack\n` +
-               `  <span class="text-emerald-400 font-bold">projects</span>        - Production engineering projects\n` +
-               `  <span class="text-emerald-400 font-bold">certifications</span>  - Cloud and vendor certifications\n` +
-               `  <span class="text-emerald-400 font-bold">experience</span>       - Work experience and education\n` +
-               `  <span class="text-emerald-400 font-bold">contacts</span>        - Communication endpoints\n` +
+               `  <span class="text-purple-400 font-bold">about</span>           - System specs and bio\n` +
+               `  <span class="text-purple-400 font-bold">skills</span>          - Core competencies and tech stack\n` +
+               `  <span class="text-purple-400 font-bold">projects</span>        - Production engineering projects\n` +
+               `  <span class="text-purple-400 font-bold">certifications</span>  - Cloud and vendor certifications\n` +
+               `  <span class="text-purple-400 font-bold">experience</span>       - Work experience and education\n` +
+               `  <span class="text-purple-400 font-bold">contacts</span>        - Communication endpoints\n` +
                `  <span class="text-emerald-400 font-bold">echo [text]</span>     - Print text to stdout\n` +
                `  <span class="text-emerald-400 font-bold">pwd</span>             - Print working directory\n` +
                `  <span class="text-emerald-400 font-bold">whoami</span>          - Print current session user\n` +
