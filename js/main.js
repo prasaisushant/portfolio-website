@@ -201,6 +201,50 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // Single wheel listener — terminal.js scroll engine removed
     window.addEventListener("wheel", handleViewportScroll, { passive: true });
+    // ─── Touch Swipe Handler ──────────────────────────────────────────────────────
+        let touchStartY = 0;
+        let touchStartX = 0;
+
+        window.addEventListener("touchstart", (e) => {
+            touchStartY = e.touches[0].clientY;
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        window.addEventListener("touchend", (e) => {
+            if (activeWorkspaceIndex === 0) return;
+            if (scrollThrottled) return;
+
+            const deltaY = touchStartY - e.changedTouches[0].clientY;
+            const deltaX = touchStartX - e.changedTouches[0].clientX;
+
+            // Only trigger if vertical swipe is dominant and long enough
+            if (Math.abs(deltaY) < 50 || Math.abs(deltaY) < Math.abs(deltaX)) return;
+
+            // If inside terminal body and not at boundary, let it scroll
+            const terminalBody = document.getElementById("terminal-body");
+            if (terminalBody && terminalBody.contains(e.target)) {
+                const atTop    = terminalBody.scrollTop === 0;
+                const atBottom = Math.ceil(terminalBody.scrollTop + terminalBody.clientHeight) >= terminalBody.scrollHeight;
+                if (deltaY < 0 && !atTop)    return;
+                if (deltaY > 0 && !atBottom) return;
+            }
+
+            let changed = false;
+
+            if (deltaY > 0 && activeWorkspaceIndex < TOTAL_WORKSPACES - 1) {
+                activeWorkspaceIndex++;
+                changed = true;
+            } else if (deltaY < 0 && activeWorkspaceIndex > 1) {
+                activeWorkspaceIndex--;
+                changed = true;
+            }
+
+            if (changed) {
+                scrollThrottled = true;
+                navigateTo(activeWorkspaceIndex);
+                setTimeout(() => { scrollThrottled = false; }, TRANSITION_DURATION);
+            }
+        }, { passive: true });
 
     // Login button
     const btnLogin = document.getElementById("btn-login");
