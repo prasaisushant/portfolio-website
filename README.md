@@ -140,25 +140,6 @@ For tools not in [devicon](https://devicon.dev), add `iconType: "text"` — a mo
 
 ---
 
-## Local Development
-
-No build step needed — just open `index.html` directly or serve with any static file server:
-
-```bash
-# Python
-python3 -m http.server 8080
-
-# Node
-npx serve .
-
-# VS Code
-# Live Server extension → right-click index.html → Open with Live Server
-```
-
-> `projects.json` is fetched via `fetch()` so you need a local server (not `file://`) for it to load correctly.
-
----
-
 ## Deployment
 
 Drop the entire folder on any static host — Netlify, Vercel, GitHub Pages, Nginx, S3+CloudFront. No server-side logic, no environment variables.
