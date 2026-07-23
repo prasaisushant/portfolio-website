@@ -97,8 +97,9 @@ const commandRegistry = {
         return `========================================================================\n` +
                `<span class="text-emerald-400 font-bold">PROFESSIONAL EXPERIENCE & EDUCATION</span>\n` +
                 `========================================================================\n` +
-                `• <span class="text-emerald-400 font-bold">Hotstone Innovations</span> — DevOps Engineer (2023–Present)\n` +
-                '• <span class="text-emerald-400 font-bold">Cloud Himalaya</span> — Network and System Engineer (2021–2023)' 
+                `• <span class="text-emerald-400 font-bold">Fenix Innovations</span> — DevOps Engineer (Jun 2026 – Present)\n` +
+                `• <span class="text-emerald-400 font-bold">Hotstone Innovations</span> — DevOps Engineer (Mar 2025 – May2025)\n` +
+                '• <span class="text-emerald-400 font-bold">Cloud Himalaya</span> — Network and System Engineer (Sep 2023 – Mar 2025)' 
     },
 
 
