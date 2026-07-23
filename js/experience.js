@@ -5,16 +5,38 @@
  */
 
 const experienceData = [
+     {
+        id:       "fenix",
+        type:     "work",
+        hash:     "bh72c1a",
+        role:     "DevOps Engineer",
+        org:      "Fenix Innovations",
+        period:   "Jun 2026 – Present",
+        location: "Kathmandu, Nepal",
+        status:   "ACTIVE",
+        statusColor: "emerald",
+        tags:     ["Proxmox", "GCP", "Kubernetes", "Terraform", "Docker", "Ansible", "Prometheus", "Grafana", "Loki", "AWS", "Helm", "Fortigate", "pfSense", "Ceph"],
+        bullets: [
+            "Engineered and maintained automated CI/CD pipelines using Jenkins and GitLab CI to streamline build, test, containerization, and deployment workflows across environments.",
+            "Managed and optimized self-hosted Proxmox hypervisor infrastructure, handling virtual machine orchestration, resource allocation, and high availability for core services.",
+            "Architected multi-environment setups (Development, Staging, and Production), enforcing configuration drift control, security standards, and release parity across all stages.",
+            "Orchestrated application deployments using Docker and Kubernetes, improving service scalability, deployment speed, and operational portability.",
+            "Implemented zero-downtime Blue/Green deployment strategies, significantly reducing production risk, enhancing rollback capability, and minimizing user impact during releases.",
+            "Administered centralized identity and access management (IAM) via LDAP, streamlining user onboarding, privilege management, and secure authentication across internal systems.",
+            "Deployed and configured internal DNS infrastructure, improving local network service discovery, domain resolution speed, and internal routing reliability.",
+            "Troubleshot cluster-level issues and virtualized server environments, ensuring high uptime, optimal performance, and rapid incident resolution across staging and production systems.",
+        ]
+    },
     {
         id:       "hotstone",
         type:     "work",
         hash:     "a3f9c12",
         role:     "DevOps Engineer",
         org:      "Hotstone Innovation (Jiwan Tech)",
-        period:   "Dec 2025 – Present",
+        period:   "Mar 2026 – May 2026",
         location: "Kathmandu, Nepal",
-        status:   "ACTIVE",
-        statusColor: "emerald",
+        status:   "COMPLETED",
+        statusColor: "cyan",
         tags:     ["Kubernetes", "Terraform", "Docker", "Ansible", "Prometheus", "Grafana", "Loki", "AWS", "DigitalOcean", "Helm"],
         bullets: [
             "Designed and maintained Kubernetes-native infrastructure for web, mobile, and backend services using Docker, Kubernetes, Terraform OSS, and Ansible.",
@@ -33,10 +55,10 @@ const experienceData = [
         hash:     "8b2e441",
         role:     "Network & System Engineer",
         org:      "Cloud Himalaya Pvt. Ltd.",
-        period:   "Sep 2023 – Dec 2025",
+        period:   "Sep 2023 – Mar 2025",
         location: "Kathmandu, Nepal",
         status:   "COMPLETED",
-        statusColor: "zinc",
+        statusColor: "amber",
         tags:     ["VMware", "Kubernetes", "Docker", "Zabbix", "Cacti", "Ansible", "Wazuh", "Check Point", "Fortinet", "pfSense", "Ceph"],
         bullets: [
             "Operated VMware ESXi and vSphere-based production infrastructure, provisioning Linux VMs, configuring networking, storage, and security for business-critical workloads.",
